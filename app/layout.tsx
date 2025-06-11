@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import ClientLayout from "./client-layout"
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "YOUR MODE - 체형 맞춤형 스타일링 서비스",
