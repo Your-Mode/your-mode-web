@@ -1,0 +1,285 @@
+"use client"
+
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import styled from "@emotion/styled"
+
+const MainContainer = styled.div`
+  min-height: 100vh;
+  background-color: #fafafa;
+  padding: 2rem 0;
+`
+
+const MainContent = styled.main`
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media (min-width: 640px) {
+    padding: 0 2rem;
+  }
+`
+
+const ContentContainer = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+  @media (max-width: 640px) {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+`
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+`
+
+const Title = styled.h1`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #333;
+  
+  @media (max-width: 640px) {
+    font-size: 1.5rem;
+  }
+`
+
+const Content = styled.div`
+  line-height: 1.8;
+  color: #374151;
+  
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    color: #1f2937;
+  }
+  
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem 0;
+    color: #374151;
+  }
+  
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f9fafb;
+      font-weight: 600;
+    }
+  }
+`
+
+const LastUpdated = styled.div`
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+`
+
+export default function PrivacyPage() {
+  return (
+    <MainContainer>
+      <MainContent>
+        <ContentContainer>
+          <Header>
+            <Link href="/signup">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft size={16} style={{ marginRight: "0.5rem" }} />
+                돌아가기
+              </Button>
+            </Link>
+            <Title>개인정보 처리방침</Title>
+          </Header>
+
+          <Content>
+            <h2>제1조 (개인정보의 처리목적)</h2>
+            <p>
+              유어모드(이하 "회사")는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적
+              이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보보호법 제18조에 따라 별도의 동의를
+              받는 등 필요한 조치를 이행할 예정입니다.
+            </p>
+            <ul>
+              <li>
+                회원 가입 및 관리: 회원 가입의사 확인, 회원제 서비스 제공에 따른 본인 식별·인증, 회원자격 유지·관리,
+                서비스 부정이용 방지 목적
+              </li>
+              <li>재화 또는 서비스 제공: 서비스 제공, 콘텐츠 제공, 맞춤서비스 제공, 본인인증 목적</li>
+              <li>
+                마케팅 및 광고에의 활용: 신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 정보 제공 및
+                참여기회 제공, 인구통계학적 특성에 따른 서비스 제공 및 광고 게재, 서비스의 유효성 확인, 접속빈도 파악
+                또는 회원의 서비스 이용에 대한 통계 목적
+              </li>
+            </ul>
+
+            <h2>제2조 (개인정보의 처리 및 보유기간)</h2>
+            <h3>1. 개인정보 처리 및 보유기간</h3>
+            <p>
+              회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보
+              보유·이용기간 내에서 개인정보를 처리·보유합니다.
+            </p>
+            <h3>2. 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>처리목적</th>
+                  <th>보유기간</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>회원 가입 및 관리</td>
+                  <td>회원 탈퇴 시까지</td>
+                </tr>
+                <tr>
+                  <td>재화 또는 서비스 제공</td>
+                  <td>재화·서비스 공급완료 및 요금결제·정산 완료시까지</td>
+                </tr>
+                <tr>
+                  <td>마케팅 및 광고 활용</td>
+                  <td>동의철회 시까지</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2>제3조 (처리하는 개인정보의 항목)</h2>
+            <p>회사는 다음의 개인정보 항목을 처리하고 있습니다.</p>
+            <h3>1. 회원가입 및 서비스 이용</h3>
+            <ul>
+              <li>필수항목: 이메일, 비밀번호, 이름, 전화번호, 키, 몸무게, 체형타입</li>
+              <li>선택항목: 마케팅 정보 수신 동의</li>
+            </ul>
+            <h3>2. 서비스 이용과정에서 자동으로 생성되는 정보</h3>
+            <ul>
+              <li>IP주소, 쿠키, MAC주소, 서비스 이용기록, 방문기록, 불량 이용기록 등</li>
+            </ul>
+
+            <h2>제4조 (개인정보의 제3자 제공)</h2>
+            <p>
+              회사는 정보주체의 개인정보를 제1조(개인정보의 처리목적)에서 명시한 범위 내에서만 처리하며, 정보주체의
+              동의, 법률의 특별한 규정 등 개인정보보호법 제17조에 해당하는 경우에만 개인정보를 제3자에게 제공합니다.
+            </p>
+
+            <h2>제5조 (개인정보처리의 위탁)</h2>
+            <p>회사는 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>위탁받는 자</th>
+                  <th>위탁하는 업무의 내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>AWS (Amazon Web Services)</td>
+                  <td>클라우드 서비스 제공 및 데이터 보관</td>
+                </tr>
+                <tr>
+                  <td>Google Analytics</td>
+                  <td>서비스 이용 통계 분석</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2>제6조 (정보주체와 법정대리인의 권리·의무 및 그 행사방법)</h2>
+            <p>정보주체는 회사에 대해 언제든지 다음 각 호의 개인정보 보호 관련 권리를 행사할 수 있습니다.</p>
+            <ul>
+              <li>개인정보 처리현황 통지요구</li>
+              <li>개인정보 처리정지 요구</li>
+              <li>개인정보의 정정·삭제 요구</li>
+              <li>손해배상 청구</li>
+            </ul>
+
+            <h2>제7조 (개인정보의 파기)</h2>
+            <h3>1. 파기절차</h3>
+            <p>
+              회사는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당
+              개인정보를 파기합니다.
+            </p>
+            <h3>2. 파기방법</h3>
+            <ul>
+              <li>전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.</li>
+              <li>종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.</li>
+            </ul>
+
+            <h2>제8조 (개인정보의 안전성 확보조치)</h2>
+            <p>회사는 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.</p>
+            <ul>
+              <li>관리적 조치: 내부관리계획 수립·시행, 정기적 직원 교육 등</li>
+              <li>
+                기술적 조치: 개인정보처리시스템 등의 접근권한 관리, 접근통제시스템 설치, 고유식별정보 등의 암호화,
+                보안프로그램 설치
+              </li>
+              <li>물리적 조치: 전산실, 자료보관실 등의 접근통제</li>
+            </ul>
+
+            <h2>제9조 (개인정보 자동 수집 장치의 설치·운영 및 거부에 관한 사항)</h2>
+            <h3>1. 쿠키의 사용 목적</h3>
+            <p>
+              회사는 이용자에게 개별적으로 맞춤된 서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는
+              &#39;쿠키(cookie)&#39;를 사용합니다.
+            </p>
+            <h3>2. 쿠키의 설치·운영 및 거부</h3>
+            <p>
+              웹브라우저 상단의 도구&gt;인터넷 옵션&gt;개인정보 메뉴의 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.
+              다만, 쿠키 저장을 거부할 경우 맞춤형 서비스 이용에 어려움이 발생할 수 있습니다.
+            </p>
+
+            <h2>제10조 (개인정보 보호책임자)</h2>
+            <p>
+              회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및
+              피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
+            </p>
+            <ul>
+              <li>개인정보 보호책임자: 김명현</li>
+              <li>연락처: privacy@yourmode.com</li>
+              <li>전화번호: 02-1234-5678</li>
+            </ul>
+
+            <h2>제11조 (개인정보 처리방침 변경)</h2>
+            <p>
+              이 개인정보처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경내용의 추가, 삭제 및 정정이 있는
+              경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.
+            </p>
+
+            <LastUpdated>최종 업데이트: 2024년 1월 1일</LastUpdated>
+          </Content>
+        </ContentContainer>
+      </MainContent>
+    </MainContainer>
+  )
+}
