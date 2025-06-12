@@ -1,5 +1,11 @@
 import "@emotion/react"
 
 declare module "@emotion/react" {
-  export interface Theme extends Theme {}
+  import { ColorsType } from "@/src/shared/styles/colors";
+  import { FontsType } from "@/src/shared/styles/fonts";
+
+  export interface Theme extends Theme {
+    colors: ColorsType;
+    fonts: FontsType;
+  }
 }
