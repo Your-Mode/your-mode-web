@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react"
-import { theme } from "@/styles/theme"
+import { theme } from "@/src/shared/styles/theme"
 
 interface ThemeProviderProps {
   children: React.ReactNode

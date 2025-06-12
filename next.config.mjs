@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     domains: ['blob.v0.dev', 'cdn.jsdelivr.net'],
     remotePatterns: [
@@ -16,7 +15,6 @@ const nextConfig = {
     emotion: true,
   },
   // CSS 최적화 설정
-  optimizeFonts: true,
   assetPrefix: undefined,
   eslint: {
     ignoreDuringBuilds: true,
