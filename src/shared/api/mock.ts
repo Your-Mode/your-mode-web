@@ -1,0 +1,249 @@
+import { Question } from "@/src/shared/types/body-type";
+
+export const questions: Question[] = [
+  {
+    id: 1,
+    question: "전체적인 골격의 인상은 어떠한가요?",
+    options: [
+      { text: "뼈가 확실하게 부각되고, 마른 편이다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "두께감이 있고 육감적이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+      { text: "두께감보다는 곡선적이고 평면적이다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 2,
+    question: "피부를 만졌을 때 느껴지는 느낌은 어떠한가요?",
+    options: [
+      { text: "피부가 부드럽고 살이 부드러운 편이다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      {
+        text: "피부가 얇고 건조한 느낌이며, 뼈가 좀 더 도드라져 보인다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "피부가 탄탄하고 쫀득한 편이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 3,
+    question: "근육이 붙는 정도는 어떠한가요?",
+    options: [
+      { text: "근육이나 지방이 잘 붙지 않는다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "근육이 붙기 어렵다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      { text: "근육이 붙기 쉽다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 4,
+    question: "목의 길이와 두께는 어떠한가요?",
+    options: [
+      {
+        text: "목의 길이가 긴 편이고, 부드러운 곡선을 이룬다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "목이 두꺼운 편이나 힘줄이 부각된다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "목이 약간 짧은 편이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 5,
+    question: "허리의 실루엣은 어떠한가요?",
+    options: [
+      {
+        text: "허리가 길고 굴곡이 거의 없이 일자로 뻗어 있다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "허리가 짧고 직선적인 느낌이며 굴곡이 적다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "허리가 길고 자연스럽게 잘록하다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 6,
+    question: "바스트의 특징은 어떠한가요?",
+    options: [
+      {
+        text: "뼈가 두드러지고 가슴 아래 갈비뼈가 잘 보이는 편이다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "두께감이 있고, 바스트 탑의 위치가 높다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "두께감이 별로 없고 바스트 탑의 위치가 낮다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ],
+  },
+  {
+    id: 7,
+    question: "어깨 골격은 어떤가요?",
+    options: [
+      { text: "어깨가 좁고 둥글게 떨어진다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      {
+        text: "어깨뼈가 튀어나와 보이고 직선적인 느낌이 강하다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "어깨가 넓고 직선적인 느낌이며, 탄탄한 인상을 준다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ],
+  },
+  {
+    id: 8,
+    question: "엉덩이의 특징은 어떠한가요?",
+    options: [
+      {
+        text: "엉덩이의 근육이 적어 탄력이 부족한 느낌이다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "뼈가 뚜렷하고, 근육이나 지방이 적어 납작한 느낌이다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "엉덩이 라인의 위쪽부터 볼륨감이 있으며 탄력있다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ],
+  },
+  {
+    id: 9,
+    question: "허벅지의 느낌은 어떠한가요?",
+    options: [
+      { text: "허벅지 앞쪽보다 옆쪽이 더 두드러진다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      {
+        text: "근육이 적고 가늘며, 특별한 근육이 없다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "허벅지가 단단하고 근육이 많아 탄력이 있다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ],
+  },
+  {
+    id: 10,
+    question: "손의 크기와 모양은 어떤가요?",
+    options: [
+      {
+        text: "손바닥이 얇은 편이며, 손등에 힘줄이 두드러진다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "손가락 관절 마디가 눈에 띈다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      { text: "손이 작고 손바닥에 두께감이 있다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 11,
+    question: "손목의 특징은 어떠한가요?",
+    options: [
+      { text: "손목의 뼈가 부각된다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "손목이 가늘고 둥근 편이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+      { text: "손목이 납작한 편이다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 12,
+    question: "발의 크기와 모양은 어떠한가요?",
+    options: [
+      {
+        text: "발 크기가 보통이며, 발목 두께는 적당하다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "발이 크고 뼈가 두드러진다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "발이 작고 발목이 가늘며 단단하다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 13,
+    question: "무릎의 모양은 어떤가요?",
+    options: [
+      { text: "무릎이 둥글고 살짝 나왔다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      {
+        text: "무릎의 뼈가 뚜렷하게 보이고 큰 편이다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "무릎이 작고 부각되지 않는 편이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 14,
+    question: "쇄골의 실루엣은 어떤가요?",
+    options: [
+      { text: "쇄골이 가늘고 자연스럽게 보인다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+      {
+        text: "쇄골이 뚜렷하게 보이고 뼈가 도드라진다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "쇄골이 거의 보이지 않는다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 15,
+    question: "얼굴형은 어떤가요?",
+    options: [
+      { text: "광대뼈나 턱선이 도드라져 보인다", type: "straight", image: "/placeholder.svg?height=100&width=100" },
+      { text: "둥근 얼굴이며, 볼이 통통한 편이다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+      { text: "계란형 얼굴이며, 얼굴 선이 부드럽다", type: "wave", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+  {
+    id: 16,
+    question: "전체적인 체형은 어떤가요?",
+    options: [
+      {
+        text: "하체가 상대적으로 부각되며 전체적으로 여리여리한 느낌이다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "전체적으로 뼈대가 도드라져 보이고 직선적인 느낌이 강하다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "상체가 발달한 느낌이며 허리가 짧고 탄탄한 인상을 다",
+        type: "natural",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+    ],
+  },
+  {
+    id: 17,
+    question: "살이 쪘을 때 어디부터 살이 찌시나요?",
+    options: [
+      {
+        text: "엉덩이, 승마살, 허벅지와 같이 하체 위주로 찐다",
+        type: "wave",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      {
+        text: "살이 잘 붙지 않고 골격이나 관절이 부각되는 편이다",
+        type: "straight",
+        image: "/placeholder.svg?height=100&width=100",
+      },
+      { text: "팔, 가슴, 배 등 상체 위주로 찐다", type: "natural", image: "/placeholder.svg?height=100&width=100" },
+    ],
+  },
+]
