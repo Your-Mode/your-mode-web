@@ -3,8 +3,6 @@
 import ContentCard from "@/src/widgets/content/ui/content-card-vertical"
 import styled from "@emotion/styled"
 import { useState, useEffect } from "react"
-import Header from "@/src/widgets/header/ui/header"
-import Footer from "@/src/widgets/footer/ui/footer"
 import { Search, ChevronDown, ChevronUp } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
@@ -505,7 +503,6 @@ export default function EditorContentsPage() {
 
   return (
     <>
-      <Header />
       <MainContainer onClick={handleClickOutside}>
         <MainContent>
           <PageHeader>
@@ -582,7 +579,6 @@ export default function EditorContentsPage() {
       <FloatingButton visible={showScrollTop} onClick={scrollToTop}>
         <ChevronUp size={20} />
       </FloatingButton>
-      <Footer />
     </>
   )
 }
