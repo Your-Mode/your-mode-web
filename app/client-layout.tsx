@@ -10,7 +10,7 @@ import Footer from "@/src/widgets/footer/ui/footer"
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isEditorPage = pathname?.startsWith("/editor")
+  const isEditorPage = pathname?.startsWith("/editor") && !pathname?.startsWith("/editor-contents")
 
   // 페이지 이동 시 스크롤을 최상단으로 이동
   useEffect(() => {
