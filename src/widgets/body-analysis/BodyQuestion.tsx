@@ -353,7 +353,3 @@ const NavButton = styled(Button)<{ variant?: string }>`
     transform: scale(1);
   }
 `
-
-const ResultContainer = styled.div`
-  text-align: center;
-`
