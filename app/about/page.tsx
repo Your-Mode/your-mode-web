@@ -1,34 +1,9 @@
 "use client";
-import { useCallback } from "react";
 import styled from "@emotion/styled";
 import { Zap, Users, Sparkles, Heart } from "lucide-react";
-import HeroSection from "@/src/widgets/about/HeroSection";
-import FeatureSection from "@/src/widgets/about/FeatureSection";
-
-function useSectionScroll() {
-  return useCallback(() => {
-    const sections = document.querySelectorAll("section");
-    const currentScroll = window.scrollY;
-    const windowHeight = window.innerHeight;
-    let currentSectionIndex = 0;
-    sections.forEach((section, index) => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      if (
-        currentScroll >= sectionTop - windowHeight / 2 &&
-        currentScroll < sectionTop + sectionHeight - windowHeight / 2
-      ) {
-        currentSectionIndex = index;
-      }
-    });
-    const nextSectionIndex = currentSectionIndex + 1;
-    if (nextSectionIndex < sections.length) {
-      const nextSection = sections[nextSectionIndex];
-      const targetPosition = nextSection.offsetTop;
-      window.scrollTo({ top: targetPosition, behavior: "smooth" });
-    }
-  }, []);
-}
+import HeroSection from "@/src/widgets/about/ui/HeroSection";
+import FeatureSection from "@/src/widgets/about/ui/FeatureSection";
+import { useSectionScroll } from "@/src/widgets/about/feature/hooks/useSectionScroll";
 
 export default function AboutPage() {
   const scrollToNext = useSectionScroll();
