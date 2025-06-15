@@ -1,9 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/src/shared/components/ui/button"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Progress } from "@/src/shared/components/ui/progress"
+import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/src/shared/components/ui/card"
 import { Eye, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import styled from "@emotion/styled"

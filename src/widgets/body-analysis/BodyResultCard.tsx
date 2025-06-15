@@ -1,7 +1,7 @@
 import { Download, Eye, Share2, Sparkles, Target } from "lucide-react";
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 
 interface BodyResultCardProps {
   resultInfo: {

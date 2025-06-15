@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import styled from "@emotion/styled"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/src/shared/components/ui/button"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Textarea } from "@/src/shared/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/shared/components/ui/select"
+import { Separator } from "@/src/shared/components/ui/separator"
 import {
   ArrowLeft,
   MessageSquare,

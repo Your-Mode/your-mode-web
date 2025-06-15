@@ -7,3 +7,12 @@ export interface Question {
     image?: string
   }[]
 }
+
+export interface BodyAnalysisResult {
+  id: string;
+  type: "natural" | "straight" | "wave";
+  analysisDate: string;
+  title: string;
+  description: string;
+  gradient: string;
+}

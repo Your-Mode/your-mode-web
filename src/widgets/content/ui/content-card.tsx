@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/src/shared/components/ui/card"
+import { Badge } from "@/src/shared/components/ui/badge"
 import { Heart, MessageCircle, Eye, CheckCircle } from "lucide-react"
 import styled from "@emotion/styled"
 

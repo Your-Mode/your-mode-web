@@ -1,1 +1,1 @@
-export { Progress } from "@/components/ui/progress"
+export { Progress } from "@/src/shared/components/ui/progress"

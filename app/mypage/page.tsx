@@ -1,73 +1,91 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Tabs, TabsContent } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/src/shared/components/ui/tabs";
+import { Button } from "@/src/shared/components/ui/button";
+import { Badge } from "@/src/shared/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/shared/components/ui/card";
+import { Progress } from "@/src/shared/components/ui/progress";
+import { Input } from "@/src/shared/components/ui/input";
+import { Textarea } from "@/src/shared/components/ui/textarea";
+import { Label } from "@/src/shared/components/ui/label";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogFooter,
   DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog"
-import { ChevronDown, ChevronUp, Target, Sparkles, Eye, ArrowRight, FileCheck, MessageSquare, Star } from "lucide-react"
-import Link from "next/link"
-import { FileText, Clock, User, CheckCircle, AlertCircle, Calendar, Tag, Search } from "lucide-react"
-import ProfileHeader from "@/src/widgets/mypage/ui/profile-header"
-import ContentTabs from "@/src/widgets/mypage/ui/content-tabs"
-import ContentGrid from "@/src/widgets/mypage/ui/content-grid"
-import EmptyState from "@/src/widgets/mypage/ui/empty-state"
-import ContentCardComponent from "@/src/widgets/content/ui/content-card"
-import styled from "@emotion/styled"
+  DialogDescription, DialogTrigger,
+} from "@/src/shared/components/ui/dialog";
+import {
+  ChevronDown,
+  ChevronUp,
+  Target,
+  Sparkles,
+  Eye,
+  ArrowRight,
+  FileCheck,
+  MessageSquare,
+  Star,
+} from "lucide-react";
+import Link from "next/link";
+import { FileText, Clock, User, CheckCircle, AlertCircle, Calendar, Tag, Search } from "lucide-react";
+import ProfileHeader from "@/src/widgets/mypage/ui/profile-header";
+import ContentTabs from "@/src/widgets/mypage/ui/content-tabs";
+import ContentGrid from "@/src/widgets/mypage/ui/content-grid";
+import EmptyState from "@/src/widgets/mypage/ui/empty-state";
+import ContentCardComponent from "@/src/widgets/content/ui/content-card";
+import styled from "@emotion/styled";
+import {
+  bodyAnalysisResult,
+  commentedContents,
+  favorites,
+  myCustomContents,
+  recentViewed,
+} from "@/src/shared/api/mock";
+import { ContentStatus } from "@/src/shared/types/content";
 
 const MainContainer = styled.div`
   min-height: 100vh;
   background-color: #fafafa;
   padding: 2rem 0;
-`
+`;
 
 const MainContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 0.75rem;
-  
+
   @media (min-width: 640px) {
     padding: 0 2rem;
   }
-`
+`;
 
 const FilterSection = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: stretch;
   }
-`
+`;
 
 const SearchContainer = styled.div`
   position: relative;
   flex: 1;
   max-width: 400px;
-  
+
   @media (max-width: 768px) {
     max-width: 100%;
   }
-`
+`;
 
 const SearchInput = styled(Input)`
   padding-right: 2.5rem;
-`
+`;
 
 const SearchIcon = styled.div`
   position: absolute;
@@ -75,54 +93,54 @@ const SearchIcon = styled.div`
   top: 50%;
   transform: translateY(-50%);
   color: #999;
-`
+`;
 
 const ContentList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-`
+`;
 
 const ContentCard = styled(Card)`
   transition: all 0.3s ease;
   border: 1px solid #e5e7eb;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     border-color: #ff3e6c;
   }
-`
+`;
 
 const CardHeaderSection = styled(CardHeader)`
   padding-bottom: 1rem;
-`
+`;
 
 const ContentHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0.75rem;
   }
-`
+`;
 
 const ContentInfo = styled.div`
   flex: 1;
-`
+`;
 
 const ContentTitle = styled(CardTitle)`
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
   color: #333;
-  
+
   @media (max-width: 640px) {
     font-size: 1.125rem;
   }
-`
+`;
 
 const ContentMeta = styled.div`
   display: flex;
@@ -131,18 +149,18 @@ const ContentMeta = styled.div`
   margin-bottom: 0.75rem;
   font-size: 0.875rem;
   color: #666;
-  
+
   @media (max-width: 640px) {
     gap: 0.5rem;
     font-size: 0.8rem;
   }
-`
+`;
 
 const MetaItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-`
+`;
 
 const StatusSection = styled.div`
   display: flex;
@@ -150,12 +168,12 @@ const StatusSection = styled.div`
   align-items: flex-end;
   gap: 0.5rem;
   min-width: 120px;
-  
+
   @media (max-width: 768px) {
     align-items: flex-start;
     min-width: auto;
   }
-`
+`;
 
 const StatusBadge = styled(Badge)<{
   status: "pending" | "assigned" | "in-progress" | "review" | "completed" | "cancelled"
@@ -163,47 +181,47 @@ const StatusBadge = styled(Badge)<{
   background-color: ${(props) => {
     switch (props.status) {
       case "pending":
-        return "#f59e0b"
+        return "#f59e0b";
       case "assigned":
-        return "#8b5cf6"
+        return "#8b5cf6";
       case "in-progress":
-        return "#3b82f6"
+        return "#3b82f6";
       case "review":
-        return "#06b6d4"
+        return "#06b6d4";
       case "completed":
-        return "#10b981"
+        return "#10b981";
       case "cancelled":
-        return "#ef4444"
+        return "#ef4444";
       default:
-        return "#f59e0b"
+        return "#f59e0b";
     }
   }};
-  
+
   &:hover {
     background-color: ${(props) => {
       switch (props.status) {
         case "pending":
-          return "#d97706"
+          return "#d97706";
         case "assigned":
-          return "#7c3aed"
+          return "#7c3aed";
         case "in-progress":
-          return "#2563eb"
+          return "#2563eb";
         case "review":
-          return "#0891b2"
+          return "#0891b2";
         case "completed":
-          return "#059669"
+          return "#059669";
         case "cancelled":
-          return "#dc2626"
+          return "#dc2626";
         default:
-          return "#d97706"
+          return "#d97706";
       }
     }};
   }
-`
+`;
 
 const ProgressSection = styled.div`
   margin: 1rem 0;
-`
+`;
 
 const ProgressHeader = styled.div`
   display: flex;
@@ -211,44 +229,44 @@ const ProgressHeader = styled.div`
   align-items: center;
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
-`
+`;
 
 const ProgressLabel = styled.span`
   color: #666;
   font-weight: 500;
-`
+`;
 
 const ProgressValue = styled.span`
   color: #333;
   font-weight: 600;
-`
+`;
 
 const ItemTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
-`
+`;
 
 const ItemTag = styled(Badge)`
   background-color: rgba(255, 62, 108, 0.1);
   color: #ff3e6c;
   border: 1px solid rgba(255, 62, 108, 0.2);
-  
+
   &:hover {
     background-color: rgba(255, 62, 108, 0.15);
   }
-`
+`;
 
 const ActionButtons = styled.div`
   display: flex;
   gap: 0.75rem;
-  
+
   @media (max-width: 640px) {
     flex-direction: column;
     gap: 0.5rem;
   }
-`
+`;
 
 const TimelineSection = styled.div<{ isExpanded: boolean }>`
   margin-top: 1rem;
@@ -260,20 +278,20 @@ const TimelineSection = styled.div<{ isExpanded: boolean }>`
   transition: max-height 0.3s ease-in-out;
   opacity: ${(props) => (props.isExpanded ? "1" : "0")};
   transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-`
+`;
 
 const TimelineTitle = styled.h4`
   font-size: 0.875rem;
   font-weight: 600;
   color: #333;
   margin-bottom: 0.75rem;
-`
+`;
 
 const TimelineList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`
+`;
 
 const TimelineItem = styled.div<{ completed: boolean }>`
   display: flex;
@@ -281,7 +299,7 @@ const TimelineItem = styled.div<{ completed: boolean }>`
   gap: 0.75rem;
   font-size: 0.875rem;
   color: ${(props) => (props.completed ? "#10b981" : "#666")};
-`
+`;
 
 const TimelineIcon = styled.div<{ completed: boolean }>`
   width: 1.25rem;
@@ -292,19 +310,19 @@ const TimelineIcon = styled.div<{ completed: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-`
+`;
 
 const ReviewForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`
+`;
 
 const StarRating = styled.div`
   display: flex;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
-`
+`;
 
 const StarButton = styled.button<{ filled: boolean }>`
   background: none;
@@ -312,29 +330,29 @@ const StarButton = styled.button<{ filled: boolean }>`
   cursor: pointer;
   color: ${(props) => (props.filled ? "#fbbf24" : "#d1d5db")};
   transition: color 0.2s;
-  
+
   &:hover {
     color: #fbbf24;
   }
-`
+`;
 
 const ThankYouDialog = styled(Dialog)`
   .dialog-content {
     text-align: center;
   }
-`
+`;
 
 // 체형분석 결과 관련 스타일
 const BodyAnalysisCard = styled(Card)`
   background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
   border: 1px solid #f9a8d4;
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(244, 114, 182, 0.15);
   }
-`
+`;
 
 const BodyTypeIcon = styled.div<{ gradient: string }>`
   width: 4rem;
@@ -351,7 +369,7 @@ const BodyTypeIcon = styled.div<{ gradient: string }>`
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-`
+`;
 
 const BodyTypeTitle = styled.h3`
   font-size: 1.25rem;
@@ -359,7 +377,7 @@ const BodyTypeTitle = styled.h3`
   color: #111827;
   margin-bottom: 0.5rem;
   text-align: center;
-`
+`;
 
 const BodyTypeDescription = styled.p`
   color: #6b7280;
@@ -367,7 +385,7 @@ const BodyTypeDescription = styled.p`
   line-height: 1.5;
   text-align: center;
   margin-bottom: 1rem;
-`
+`;
 
 const AnalysisDate = styled.div`
   display: flex;
@@ -377,56 +395,29 @@ const AnalysisDate = styled.div`
   color: #9ca3af;
   font-size: 0.75rem;
   margin-bottom: 1rem;
-`
+`;
 
 const ViewResultButton = styled(Button)`
   width: 100%;
   background: linear-gradient(to right, #f472b6, #ec4899);
   color: white;
   border: none;
-  
+
   &:hover {
     background: linear-gradient(to right, #ec4899, #db2777);
   }
-`
-
-type ContentStatus = "pending" | "assigned" | "in-progress" | "review" | "completed" | "cancelled"
-
-interface MyContentItem {
-  id: string
-  title: string
-  description: string
-  status: ContentStatus
-  progress: number
-  applicationDate: string
-  expectedDate?: string
-  editorName?: string
-  items: string[]
-  timeline: {
-    step: string
-    completed: boolean
-    date?: string
-  }[]
-}
-
-interface BodyAnalysisResult {
-  id: string
-  type: "natural" | "straight" | "wave"
-  analysisDate: string
-  title: string
-  description: string
-  gradient: string
-}
+`;
 
 export default function MyPage() {
-  const [activeTab, setActiveTab] = useState("my-content")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [reviewModalOpen, setReviewModalOpen] = useState(false)
-  const [thankYouModalOpen, setThankYouModalOpen] = useState(false)
-  const [selectedContentId, setSelectedContentId] = useState<string | null>(null)
-  const [rating, setRating] = useState(0)
-  const [reviewText, setReviewText] = useState("")
-  const [expandedTimelines, setExpandedTimelines] = useState<Set<string>>(new Set())
+  const [activeTab, setActiveTab] = useState("my-content");
+  const [activeCustomTab, setActiveCustomTab] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [thankYouModalOpen, setThankYouModalOpen] = useState(false);
+  const [selectedContentId, setSelectedContentId] = useState<string | null>(null);
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [expandedTimelines, setExpandedTimelines] = useState<Set<string>>(new Set());
 
   // 샘플 데이터
   const userProfile = {
@@ -438,264 +429,85 @@ export default function MyPage() {
       favorites: 5,
       comments: 2,
     },
-  }
+  };
 
-  // 체형분석 결과 데이터
-  const bodyAnalysisResult: BodyAnalysisResult = {
-    id: "analysis-001",
-    type: "wave",
-    analysisDate: "2025년 6월 10일",
-    title: "웨이브 타입",
-    description:
-      "우아하고 여성스러운 매력을 가진 체형입니다. 부드러운 곡선과 유연한 라인으로 로맨틱하고 페미닌한 스타일이 잘 어울립니다.",
-    gradient: "from-rose-400 to-pink-500",
-  }
-
-  const myCustomContents: MyContentItem[] = [
-    {
-      id: "mc-001",
-      title: "오피스 룩 스타일링 요청",
-      description:
-        "직장에서 입을 수 있는 세미 캐주얼 스타일 추천을 요청했습니다. 키 165cm, 웨이브 체형에 맞는 전문적이면서도 편안한 스타일을 원합니다.",
-      status: "in-progress",
-      progress: 75,
-      applicationDate: "2025년 5월 15일",
-      expectedDate: "2025년 5월 22일",
-      editorName: "김스타일",
-      items: ["아우터", "상의", "하의", "신발"],
-      timeline: [
-        { step: "신청 접수", completed: true, date: "2025년 5월 15일" },
-        { step: "에디터 배정", completed: true, date: "2025년 5월 16일" },
-        { step: "스타일링 제작", completed: true, date: "진행 중" },
-        { step: "검토 및 수정", completed: false, date: "" },
-        { step: "최종 완성", completed: false, date: "" },
-      ],
-    },
-    {
-      id: "mc-002",
-      title: "데이트 룩 스타일링 요청",
-      description:
-        "주말 데이트에 어울리는 캐주얼하면서도 세련된 스타일을 요청했습니다. 20대 후반, 웨이브 체형에 맞는 로맨틱한 느낌의 코디를 원합니다.",
-      status: "assigned",
-      progress: 25,
-      applicationDate: "2025년 5월 20일",
-      expectedDate: "2025년 5월 27일",
-      editorName: "박패션",
-      items: ["원피스", "악세서리", "가방"],
-      timeline: [
-        { step: "신청 접수", completed: true, date: "2025년 5월 20일" },
-        { step: "에디터 배정", completed: true, date: "2025년 5월 21일" },
-        { step: "스타일링 제작", completed: false, date: "" },
-        { step: "검토 및 수정", completed: false, date: "" },
-        { step: "최종 완성", completed: false, date: "" },
-      ],
-    },
-    {
-      id: "mc-003",
-      title: "여름 휴가 스타일링 요청",
-      description:
-        "해변 리조트에서 입을 수 있는 시원하고 편안한 스타일을 요청했습니다. 30대 초반, 웨이브 체형에 맞는 리조트 룩을 원합니다.",
-      status: "completed",
-      progress: 100,
-      applicationDate: "2025년 4월 10일",
-      expectedDate: "2025년 4월 17일",
-      editorName: "이디자인",
-      items: ["상의", "하의", "신발", "모자"],
-      timeline: [
-        { step: "신청 접수", completed: true, date: "2025년 4월 10일" },
-        { step: "에디터 배정", completed: true, date: "2025년 4월 11일" },
-        { step: "스타일링 제작", completed: true, date: "2025년 4월 15일" },
-        { step: "검토 및 수정", completed: true, date: "2025년 4월 16일" },
-        { step: "최종 완성", completed: true, date: "2025년 4월 17일" },
-      ],
-    },
-    {
-      id: "mc-004",
-      title: "결혼식 하객 룩 스타일링 요청",
-      description:
-        "친구 결혼식에 참석할 때 입을 수 있는 격식 있는 스타일을 요청했습니다. 웨이브 체형에 맞는 우아하고 단정한 룩을 원합니다.",
-      status: "pending",
-      progress: 10,
-      applicationDate: "2025년 5월 25일",
-      expectedDate: "2025년 6월 1일",
-      items: ["원피스", "악세서리", "신발", "가방"],
-      timeline: [
-        { step: "신청 접수", completed: true, date: "2025년 5월 25일" },
-        { step: "에디터 배정", completed: false, date: "" },
-        { step: "스타일링 제작", completed: false, date: "" },
-        { step: "검토 및 수정", completed: false, date: "" },
-        { step: "최종 완성", completed: false, date: "" },
-      ],
-    },
-  ]
-
-  const favorites = [
-    {
-      id: "fav-1",
-      title: "웨이브 체형을 위한 여름 코디",
-      bodyType: "웨이브",
-      likes: 142,
-      comments: 28,
-      date: "2025년 06월 10일",
-      isLiked: true,
-    },
-    {
-      id: "fav-2",
-      title: "오피스 룩 스타일링 가이드",
-      bodyType: "웨이브",
-      likes: 98,
-      comments: 15,
-      date: "2025년 06월 05일",
-      isLiked: true,
-    },
-    {
-      id: "fav-3",
-      title: "데이트 룩 추천: 웨이브 체형",
-      bodyType: "웨이브",
-      likes: 120,
-      comments: 22,
-      date: "2025년 05월 28일",
-      isLiked: true,
-    },
-    {
-      id: "fav-4",
-      title: "캐주얼 스타일링 완벽 가이드",
-      bodyType: "웨이브",
-      likes: 87,
-      comments: 19,
-      date: "2025년 05월 25일",
-      isLiked: true,
-    },
-    {
-      id: "fav-5",
-      title: "가을 트렌드 스타일링",
-      bodyType: "웨이브",
-      likes: 156,
-      comments: 34,
-      date: "2025년 05월 20일",
-      isLiked: true,
-    },
-  ]
-
-  const recentViewed = [
-    {
-      id: "recent-1",
-      title: "스트레이트 체형을 위한 겨울 코디",
-      bodyType: "스트레이트",
-      likes: 203,
-      comments: 45,
-      date: "2025년 06월 12일",
-      viewedAt: "2시간 전",
-    },
-    {
-      id: "recent-2",
-      title: "내추럴 체형의 봄 스타일링",
-      bodyType: "내추럴",
-      likes: 178,
-      comments: 32,
-      date: "2025년 06월 11일",
-      viewedAt: "1일 전",
-    },
-    {
-      id: "recent-3",
-      title: "웨이브 체형을 위한 파티 룩",
-      bodyType: "웨이브",
-      likes: 234,
-      comments: 56,
-      date: "2025년 06월 10일",
-      viewedAt: "2일 전",
-    },
-  ]
-
-  const commentedContents = [
-    {
-      id: "comment-1",
-      title: "체형별 청바지 추천 가이드",
-      bodyType: "웨이브",
-      likes: 189,
-      comments: 67,
-      date: "2025년 06월 08일",
-      myComment: "정말 유용한 정보네요! 감사합니다 ✨",
-    },
-    {
-      id: "comment-2",
-      title: "여름 원피스 스타일링 팁",
-      bodyType: "웨이브",
-      likes: 145,
-      comments: 43,
-      date: "2025년 06월 05일",
-      myComment: "이런 스타일 찾고 있었어요!",
-    },
-  ]
-
-  const completedContents = myCustomContents.filter((content) => content.status === "completed")
+  const completedContents = myCustomContents.filter((content) => content.status === "completed");
 
   const getStatusText = (status: ContentStatus) => {
     switch (status) {
       case "pending":
-        return "접수 완료"
+        return "접수 완료";
       case "assigned":
-        return "에디터 배정"
+        return "에디터 배정";
       case "in-progress":
-        return "제작 중"
+        return "제작 중";
       case "review":
-        return "검토 중"
+        return "검토 중";
       case "completed":
-        return "완료"
+        return "완료";
       case "cancelled":
-        return "취소됨"
+        return "취소됨";
       default:
-        return "접수 완료"
+        return "접수 완료";
     }
-  }
+  };
 
   const getStatusIcon = (status: ContentStatus) => {
     switch (status) {
       case "pending":
-        return <Clock size={14} />
+        return <Clock size={14} />;
       case "assigned":
-        return <User size={14} />
+        return <User size={14} />;
       case "in-progress":
-        return <FileText size={14} />
+        return <FileText size={14} />;
       case "review":
-        return <AlertCircle size={14} />
+        return <AlertCircle size={14} />;
       case "completed":
-        return <CheckCircle size={14} />
+        return <CheckCircle size={14} />;
       case "cancelled":
-        return <AlertCircle size={14} />
+        return <AlertCircle size={14} />;
       default:
-        return <Clock size={14} />
+        return <Clock size={14} />;
     }
-  }
+  };
 
   const toggleTimeline = (contentId: string) => {
-    const newExpanded = new Set(expandedTimelines)
+    const newExpanded = new Set(expandedTimelines);
     if (newExpanded.has(contentId)) {
-      newExpanded.delete(contentId)
+      newExpanded.delete(contentId);
     } else {
-      newExpanded.add(contentId)
+      newExpanded.add(contentId);
     }
-    setExpandedTimelines(newExpanded)
-  }
+    setExpandedTimelines(newExpanded);
+  };
 
   const handleReviewSubmit = () => {
-    console.log("Review submitted:", { contentId: selectedContentId, rating, reviewText })
-    setReviewModalOpen(false)
-    setThankYouModalOpen(true)
-    setSelectedContentId(null)
-    setRating(0)
-    setReviewText("")
-  }
+    console.log("Review submitted:", { contentId: selectedContentId, rating, reviewText });
+    setReviewModalOpen(false);
+    setThankYouModalOpen(true);
+    setSelectedContentId(null);
+    setRating(0);
+    setReviewText("");
+  };
 
-  // 필터링 로직 (진행상황 탭용)
+  // 필터링 로직
   const filteredContents = myCustomContents.filter((content) => {
     const matchesSearch = searchQuery
       ? content.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        content.description.toLowerCase().includes(searchQuery.toLowerCase())
-      : true
+      content.description.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
 
-    return matchesSearch
-  })
+    const matchesTab = activeCustomTab === "all" ? true : content.status === activeCustomTab;
+
+    return matchesSearch && matchesTab;
+  });
+
+  const tabCounts = {
+    all: myCustomContents.length,
+    pending: myCustomContents.filter((c) => c.status === "pending").length,
+    "in-progress": myCustomContents.filter((c) => c.status === "in-progress" || c.status === "assigned").length,
+    completed: myCustomContents.filter((c) => c.status === "completed").length,
+  };
 
   return (
     <MainContainer>
@@ -754,6 +566,15 @@ export default function MyPage() {
                     <Search size={16} />
                   </SearchIcon>
                 </SearchContainer>
+
+                <Tabs value={activeCustomTab} onValueChange={setActiveCustomTab}>
+                  <FilterTabs>
+                    <TabsTrigger value="all">전체 ({tabCounts.all})</TabsTrigger>
+                    <TabsTrigger value="pending">대기 중 ({tabCounts.pending})</TabsTrigger>
+                    <TabsTrigger value="in-progress">진행 중 ({tabCounts["in-progress"]})</TabsTrigger>
+                    <TabsTrigger value="completed">완료 ({tabCounts.completed})</TabsTrigger>
+                  </FilterTabs>
+                </Tabs>
               </FilterSection>
 
               {filteredContents.length > 0 ? (
@@ -832,7 +653,7 @@ export default function MyPage() {
                             {expandedTimelines.has(content.id) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             진행 단계 확인
                           </Button>
-                          <Link href={`/my-content/detail/${content.id}`}>
+                          <Link href={`/mypage/detail/${content.id}`}>
                             <Button variant="outline" size="sm">
                               <FileCheck size={16} />
                               신청 내용 확인하기
@@ -840,12 +661,12 @@ export default function MyPage() {
                           </Link>
                           {content.status === "completed" && (
                             <Dialog open={reviewModalOpen} onOpenChange={setReviewModalOpen}>
-                              <button asChild onClick={() => setSelectedContentId(content.id)}>
-                                <Button variant="outline" size="sm">
+                              <DialogTrigger asChild>
+                                <Button variant="outline" size="sm" onClick={() => setSelectedContentId(content.id)}>
                                   <MessageSquare size={16} />
                                   후기 작성
                                 </Button>
-                              </button>
+                              </DialogTrigger>
                               <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                   <DialogTitle>스타일링 후기 작성</DialogTitle>
@@ -858,14 +679,14 @@ export default function MyPage() {
                                     <Label htmlFor="rating">만족도</Label>
                                     <StarRating>
                                       {[1, 2, 3, 4, 5].map((star) => (
-                                        <button
+                                        <StarButton
                                           key={star}
                                           type="button"
                                           filled={star <= rating}
                                           onClick={() => setRating(star)}
                                         >
                                           <Star size={24} fill={star <= rating ? "currentColor" : "none"} />
-                                        </button>
+                                        </StarButton>
                                       ))}
                                     </StarRating>
                                   </div>
@@ -1033,5 +854,10 @@ export default function MyPage() {
         </ThankYouDialog>
       </MainContent>
     </MainContainer>
-  )
+  );
 }
+
+const FilterTabs = styled(TabsList)`
+  background-color: white;
+  border: 1px solid #e5e7eb;
+`;

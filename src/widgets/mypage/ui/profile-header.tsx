@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/shared/components/ui/button"
 import { Edit, User, Mail } from "lucide-react"
 import styled from "@emotion/styled"
 import { useRouter } from "next/navigation"
