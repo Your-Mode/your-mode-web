@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { allContent } from "@/src/shared/api/mock";
+import { ContentItem } from "@/src/shared/types/content";
 
 export const useHandleSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -8,7 +8,7 @@ export const useHandleSearch = () => {
     setSearchQuery(e.target.value);
   };
 
-  const filterContent = (activeTab: string, sortType: string) => {
+  const filterContent = (allContent: ContentItem[], activeTab: string, sortType: string) => {
     let result = allContent.filter((content) => {
       // 검색어 필터링
       const matchesSearch = searchQuery ? content.title.toLowerCase().includes(searchQuery.toLowerCase()) : true;

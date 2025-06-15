@@ -9,13 +9,14 @@ import FloatingButton from "@/src/widgets/contents/ui/FloatingButton";
 import ContentFilter from "@/src/widgets/contents/ui/ContentFilter";
 import ContentsHeader from "@/src/widgets/contents/ui/ContentsHeader";
 import ContentsList from "@/src/widgets/contents/ui/ContentsList";
+import { allContent } from "@/src/shared/api/mock";
 
 export default function ContentsPage() {
   const { searchQuery, onChangeSearch, filterContent } = useHandleSearch();
   const { activeTab, changeTab } = useHandleTab();
   const { sortType, isSortOpen, handleSortClick, handleClickOutside, handleSortOptionClick } = useHandleDropdown();
 
-  const filteredContent = filterContent(activeTab, sortType);
+  const filteredContent = filterContent(allContent, activeTab, sortType);
 
   return (
     <MainContainer onClick={handleClickOutside}>
