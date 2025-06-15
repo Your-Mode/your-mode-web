@@ -1,6 +1,5 @@
 "use client";
 
-import ContentCard from "@/src/widgets/content/ui/content-card-vertical";
 import styled from "@emotion/styled";
 import Searchbar from "@/src/widgets/contents/ui/Searchbar";
 import { useHandleSearch } from "@/src/widgets/contents/feature/useHandleSearch";
