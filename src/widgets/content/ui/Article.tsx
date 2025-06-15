@@ -1,7 +1,7 @@
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 
 interface ArticleProps {
   likeCount: number;
