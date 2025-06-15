@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight, Sparkles, Target } from "lucide-react";
 import { questions } from "@/src/shared/api/mock";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 import { Question } from "@/src/shared/types/body-type";
 
 interface BodyQuestionProps {

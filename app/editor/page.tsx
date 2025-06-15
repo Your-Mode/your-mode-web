@@ -1,8 +1,8 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Button } from "@/src/shared/components/ui/button"
 import { FileText, Users, Eye, TrendingUp, MessageSquare, PlusCircle, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import styled from "@emotion/styled"

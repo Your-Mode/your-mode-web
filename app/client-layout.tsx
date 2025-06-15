@@ -5,8 +5,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/src/app/providers/theme-provider"
 import { usePathname } from "next/navigation"
 import { useEffect } from "react"
-import Header from "@/src/widgets/header/ui/header"
-import Footer from "@/src/widgets/footer/ui/footer"
+import Header from "@/src/shared/components/Header"
+import Footer from "@/src/shared/components/Footer"
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

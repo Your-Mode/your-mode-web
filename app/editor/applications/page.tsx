@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import styled from "@emotion/styled"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/src/shared/components/ui/button"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/src/shared/components/ui/tabs"
 import { Search, Filter, ChevronDown, Eye, MessageSquare, CheckCircle, XCircle, Clock, FileText } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/src/shared/components/ui/input"
 import Link from "next/link"
 
 const PageContainer = styled.div`

@@ -2,15 +2,15 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/src/shared/components/ui/button"
+import { Avatar, AvatarFallback } from "@/src/shared/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/src/shared/components/ui/dropdown-menu"
 import { Settings, Menu, LogOut, User, Home } from "lucide-react"
 import Link from "next/link"
 import styled from "@emotion/styled"

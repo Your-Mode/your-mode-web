@@ -3,14 +3,14 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Slider } from "@/components/ui/slider"
+import { Button } from "@/src/shared/components/ui/button"
+import { Input } from "@/src/shared/components/ui/input"
+import { Label } from "@/src/shared/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/src/shared/components/ui/radio-group"
+import { Checkbox } from "@/src/shared/components/ui/checkbox"
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Slider } from "@/src/shared/components/ui/slider"
 import {
   Eye,
   EyeOff,

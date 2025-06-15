@@ -4,10 +4,10 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/src/shared/components/ui/button"
+import { Input } from "@/src/shared/components/ui/input"
+import { Label } from "@/src/shared/components/ui/label"
+import { Checkbox } from "@/src/shared/components/ui/checkbox"
 import Link from "next/link"
 import styled from "@emotion/styled"
 
@@ -476,7 +476,7 @@ export default function SignupPage() {
                       <RequiredBadge>(필수)</RequiredBadge>
                     </AgreementLabel>
                     <AgreementLinks>
-                      <AgreementLink href="/terms">전체보기</AgreementLink>
+                      <AgreementLink href="/policy/term">전체보기</AgreementLink>
                     </AgreementLinks>
                     {errors.termsAgreed && <ErrorText>{errors.termsAgreed}</ErrorText>}
                   </div>
@@ -494,7 +494,7 @@ export default function SignupPage() {
                       <RequiredBadge>(필수)</RequiredBadge>
                     </AgreementLabel>
                     <AgreementLinks>
-                      <AgreementLink href="/privacy">전체보기</AgreementLink>
+                      <AgreementLink href="/policy/privacy">전체보기</AgreementLink>
                     </AgreementLinks>
                     {errors.privacyAgreed && <ErrorText>{errors.privacyAgreed}</ErrorText>}
                   </div>
