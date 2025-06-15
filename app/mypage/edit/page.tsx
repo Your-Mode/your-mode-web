@@ -1,64 +1,32 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/src/shared/components/ui/button"
-import { Input } from "@/src/shared/components/ui/input"
-import { Label } from "@/src/shared/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/src/shared/components/ui/radio-group"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import styled from "@emotion/styled"
+import type React from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/src/shared/components/ui/button";
+import { Input } from "@/src/shared/components/ui/input";
+import { Label } from "@/src/shared/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/src/shared/components/ui/radio-group";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import styled from "@emotion/styled";
+import InnerHeader from "@/src/shared/components/InnerHeader";
 
 const MainContainer = styled.div`
   min-height: 100vh;
   background-color: #fafafa;
   padding-top: 2rem;
-`
+`;
 
 const MainContent = styled.main`
   max-width: 32rem;
   margin: 0 auto;
   padding: 0 1rem;
-  
+
   @media (min-width: 640px) {
     padding: 0 2rem;
   }
-`
-
-const HeaderSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-`
-
-const BackButton = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: #666;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background-color: #f8f9fa;
-    color: #ff3e6c;
-  }
-`
-
-const PageTitle = styled.h1`
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
-  margin: 0;
-`
+`;
 
 const FormContainer = styled.div`
   background-color: white;
@@ -66,18 +34,18 @@ const FormContainer = styled.div`
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 4rem;
-  
+
   @media (max-width: 640px) {
     padding: 1.5rem;
     margin: 0 1rem 3rem 1rem;
   }
-`
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-`
+`;
 
 const FormSection = styled.div`
   display: flex;
@@ -85,16 +53,16 @@ const FormSection = styled.div`
   gap: 1.5rem;
   padding: 1.5rem 0;
   border-bottom: 1px solid #f0f0f0;
-  
+
   &:last-child {
     border-bottom: none;
     padding-bottom: 0;
   }
-  
+
   &:first-child {
     padding-top: 0;
   }
-`
+`;
 
 const SectionTitle = styled.h2`
   font-size: 1.125rem;
@@ -104,41 +72,41 @@ const SectionTitle = styled.h2`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`
+`;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`
+`;
 
 const FormRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  
+
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-`
+`;
 
 const StyledInput = styled(Input)`
   &:focus {
     border-color: #ff3e6c;
     box-shadow: 0 0 0 2px rgba(255, 62, 108, 0.1);
   }
-  
+
   &:disabled {
     background-color: #f8f9fa;
     color: #666;
     cursor: not-allowed;
   }
-`
+`;
 
 const PasswordInputContainer = styled.div`
   position: relative;
-`
+`;
 
 const PasswordToggle = styled.button`
   position: absolute;
@@ -150,88 +118,88 @@ const PasswordToggle = styled.button`
   color: #666;
   cursor: pointer;
   padding: 0.25rem;
-  
+
   &:hover {
     color: #ff3e6c;
   }
-`
+`;
 
 const RadioContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-top: 0.5rem;
-`
+`;
 
 const RadioItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`
+`;
 
 const HelpText = styled.p`
   font-size: 0.75rem;
   color: #666;
   margin-top: 0.25rem;
   line-height: 1.4;
-`
+`;
 
 const ErrorText = styled.p`
   color: #ef4444;
   font-size: 0.75rem;
   margin-top: 0.25rem;
-`
+`;
 
 const SuccessText = styled.p`
   color: #10b981;
   font-size: 0.75rem;
   margin-top: 0.25rem;
-`
+`;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
-  
+
   @media (max-width: 640px) {
     flex-direction: column;
   }
-`
+`;
 
 const SaveButton = styled(Button)`
   flex: 1;
   background-color: #ff3e6c;
-  
+
   &:hover {
     background-color: #e62e5c;
   }
-  
+
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
-`
+`;
 
 const CancelButton = styled(Button)`
   flex: 1;
   background-color: transparent;
   color: #666;
   border: 1px solid #ddd;
-  
+
   &:hover {
     background-color: #f8f9fa;
     color: #333;
   }
-`
+`;
 
 const DisabledNote = styled.span`
   font-size: 0.75rem;
   color: #999;
   font-style: italic;
-`
+`;
 
 export default function ProfileEditPage() {
-  const router = useRouter()
+  const router = useRouter();
 
   // 기존 사용자 정보 (실제로는 API에서 가져올 데이터)
   const [profileData, setProfileData] = useState({
@@ -241,57 +209,51 @@ export default function ProfileEditPage() {
     height: "165",
     weight: "55",
     bodyType: "wave",
-  })
+  });
 
   // 기본 정보 상태
-  const [basicInfoLoading, setBasicInfoLoading] = useState(false)
-  const [basicInfoSuccess, setBasicInfoSuccess] = useState("")
-  const [basicInfoErrors, setBasicInfoErrors] = useState<{ [key: string]: string }>({})
+  const [basicInfoLoading, setBasicInfoLoading] = useState(false);
+  const [basicInfoSuccess, setBasicInfoSuccess] = useState("");
+  const [basicInfoErrors, setBasicInfoErrors] = useState<{ [key: string]: string }>({});
 
   // 기본 정보 저장 함수
   const handleBasicInfoSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setBasicInfoLoading(true)
-    setBasicInfoErrors({})
+    e.preventDefault();
+    setBasicInfoLoading(true);
+    setBasicInfoErrors({});
 
-    const newErrors: { [key: string]: string } = {}
-    if (!profileData.name) newErrors.name = "이름을 입력해주세요"
-    if (!profileData.phone) newErrors.phone = "전화번호를 입력해주세요"
-    if (!profileData.height) newErrors.height = "키를 입력해주세요"
-    if (!profileData.weight) newErrors.weight = "몸무게를 입력해주세요"
-    if (!profileData.bodyType) newErrors.bodyType = "체형을 선택해주세요"
+    const newErrors: { [key: string]: string } = {};
+    if (!profileData.name) newErrors.name = "이름을 입력해주세요";
+    if (!profileData.phone) newErrors.phone = "전화번호를 입력해주세요";
+    if (!profileData.height) newErrors.height = "키를 입력해주세요";
+    if (!profileData.weight) newErrors.weight = "몸무게를 입력해주세요";
+    if (!profileData.bodyType) newErrors.bodyType = "체형을 선택해주세요";
 
     if (Object.keys(newErrors).length > 0) {
-      setBasicInfoErrors(newErrors)
-      setBasicInfoLoading(false)
-      return
+      setBasicInfoErrors(newErrors);
+      setBasicInfoLoading(false);
+      return;
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setBasicInfoSuccess("기본 정보가 성공적으로 업데이트되었습니다!")
-      setTimeout(() => setBasicInfoSuccess(""), 3000)
-    } catch (error) {
-      setBasicInfoErrors({ general: "기본 정보 업데이트 중 오류가 발생했습니다." })
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setBasicInfoSuccess("기본 정보가 성공적으로 업데이트되었습니다!");
+      setTimeout(() => setBasicInfoSuccess(""), 3000);
+    } catch ( error ) {
+      setBasicInfoErrors({ general: "기본 정보 업데이트 중 오류가 발생했습니다." });
     } finally {
-      setBasicInfoLoading(false)
+      setBasicInfoLoading(false);
     }
-  }
+  };
 
   const handleCancel = () => {
-    router.back()
-  }
+    router.back();
+  };
 
   return (
     <MainContainer>
       <MainContent>
-        <HeaderSection>
-          <BackButton href="/mypage">
-            <ArrowLeft size={20} />
-          </BackButton>
-          <PageTitle>기본정보 변경</PageTitle>
-        </HeaderSection>
-
+        <InnerHeader title="기본정보 변경" />
         <FormContainer>
           <Form onSubmit={handleBasicInfoSubmit}>
             {/* 기본 정보 섹션 */}
@@ -405,5 +367,5 @@ export default function ProfileEditPage() {
         </FormContainer>
       </MainContent>
     </MainContainer>
-  )
+  );
 }
