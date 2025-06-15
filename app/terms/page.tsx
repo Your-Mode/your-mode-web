@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/shared/components/ui/button"
 import styled from "@emotion/styled"
 
 const MainContainer = styled.div`

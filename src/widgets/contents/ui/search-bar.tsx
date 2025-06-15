@@ -1,6 +1,6 @@
 "use client"
 
-import { Input } from "@/components/ui/input"
+import { Input } from "@/src/shared/components/ui/input"
 import { Search } from "lucide-react"
 import styled from "@emotion/styled"
 

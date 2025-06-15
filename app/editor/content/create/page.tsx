@@ -3,12 +3,12 @@
 import type React from "react"
 
 import { useState, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Slider } from "@/components/ui/slider"
+import { Button } from "@/src/shared/components/ui/button"
+import { Input } from "@/src/shared/components/ui/input"
+import { Label } from "@/src/shared/components/ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Slider } from "@/src/shared/components/ui/slider"
 import {
   ImageIcon,
   Plus,
@@ -42,7 +42,7 @@ import {
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import styled from "@emotion/styled"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/src/shared/components/ui/checkbox"
 
 const MainContainer = styled.div`
   min-height: calc(100vh - 4rem);

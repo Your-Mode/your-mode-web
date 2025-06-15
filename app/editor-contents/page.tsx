@@ -4,7 +4,7 @@ import ContentCard from "@/src/widgets/content/ui/content-card-vertical"
 import styled from "@emotion/styled"
 import { useState, useEffect } from "react"
 import { Search, ChevronDown, ChevronUp } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/src/shared/components/ui/input"
 
 const MainContainer = styled.div`
   min-height: 100vh;

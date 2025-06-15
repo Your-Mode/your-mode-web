@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Tabs, TabsContent } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent } from "@/src/shared/components/ui/tabs"
+import { Button } from "@/src/shared/components/ui/button"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Progress } from "@/src/shared/components/ui/progress"
+import { Input } from "@/src/shared/components/ui/input"
+import { Textarea } from "@/src/shared/components/ui/textarea"
+import { Label } from "@/src/shared/components/ui/label"
 import {
   Dialog,
   DialogContent,
@@ -16,7 +16,7 @@ import {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
+} from "@/src/shared/components/ui/dialog"
 import { ChevronDown, ChevronUp, Target, Sparkles, Eye, ArrowRight, FileCheck, MessageSquare, Star } from "lucide-react"
 import Link from "next/link"
 import { FileText, Clock, User, CheckCircle, AlertCircle, Calendar, Tag, Search } from "lucide-react"

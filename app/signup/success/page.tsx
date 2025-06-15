@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/shared/components/ui/button"
 import { CheckCircle, Sparkles, Heart } from "lucide-react"
 import Link from "next/link"
 import styled from "@emotion/styled"

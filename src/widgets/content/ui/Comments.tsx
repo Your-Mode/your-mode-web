@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 import { Edit, MessageCircleIcon as MessageCircle2, Trash2 } from "lucide-react";
 import styled from "@emotion/styled";
 import { useManageComment } from "@/src/widgets/content/feature/useManageComment";

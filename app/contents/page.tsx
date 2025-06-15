@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import ContentCard from "@/src/widgets/content/ui/content-card-vertical"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/src/shared/components/ui/input"
 import { Search, ChevronDown, ChevronUp } from "lucide-react"
 import styled from "@emotion/styled"
 

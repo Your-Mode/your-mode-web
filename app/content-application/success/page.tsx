@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/shared/components/ui/button"
 import { CheckCircle, Clock, User, Palette, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import styled from "@emotion/styled"

@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/src/shared/components/ui/button"
+import { Badge } from "@/src/shared/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/shared/components/ui/card"
+import { Progress } from "@/src/shared/components/ui/progress"
+import { Tabs, TabsList, TabsTrigger } from "@/src/shared/components/ui/tabs"
 import {
   Clock,
   User,
@@ -20,8 +20,8 @@ import {
   Star,
   MessageSquare,
 } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/src/shared/components/ui/input"
+import { Textarea } from "@/src/shared/components/ui/textarea"
 import {
   Dialog,
   DialogContent,
@@ -30,8 +30,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
+} from "@/src/shared/components/ui/dialog"
+import { Label } from "@/src/shared/components/ui/label"
 import Link from "next/link"
 import styled from "@emotion/styled"
 

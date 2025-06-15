@@ -1,9 +1,9 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/src/shared/components/ui/input";
+import { Textarea } from "@/src/shared/components/ui/textarea";
+import { Button } from "@/src/shared/components/ui/button";
 import { useState } from "react";
 import { ContactFormData, useContactForm } from "@/src/widgets/contact/feature/hooks/useContactForm";
 import FormGroup from "@/src/widgets/contact/ui/FormGroup";

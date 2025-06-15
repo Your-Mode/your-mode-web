@@ -1,1 +1,1 @@
-export { Input } from "@/components/ui/input"
+export { Input } from "@/src/shared/components/ui/input"

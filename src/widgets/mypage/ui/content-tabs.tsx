@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/src/shared/components/ui/tabs"
 import styled from "@emotion/styled"
 
 const StyledTabs = styled(Tabs)`
