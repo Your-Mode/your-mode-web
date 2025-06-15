@@ -155,7 +155,7 @@ export default function Footer() {
         </FooterMain>
 
         <FooterBottom>
-          <LegalLink href="/policy/service">서비스 이용약관</LegalLink>
+          <LegalLink href="/policy/term">서비스 이용약관</LegalLink>
           <LegalLink href="/policy/privacy">개인정보 처리 방침</LegalLink>
           <LegalLink href="/policy/copyright">저작권 정책</LegalLink>
         </FooterBottom>
