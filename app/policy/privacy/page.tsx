@@ -1,37 +1,38 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/src/shared/components/ui/button"
-import styled from "@emotion/styled"
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/src/shared/components/ui/button";
+import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 const MainContainer = styled.div`
   min-height: 100vh;
   background-color: #fafafa;
   padding: 2rem 0;
-`
+`;
 
 const MainContent = styled.main`
   max-width: 48rem;
   margin: 0 auto;
   padding: 0 1rem;
-  
+
   @media (min-width: 640px) {
     padding: 0 2rem;
   }
-`
+`;
 
 const ContentContainer = styled.div`
   background-color: white;
   border-radius: 8px;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  
+
   @media (max-width: 640px) {
     padding: 1.5rem;
     margin: 0 1rem;
   }
-`
+`;
 
 const Header = styled.div`
   display: flex;
@@ -40,67 +41,67 @@ const Header = styled.div`
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #e5e7eb;
-`
+`;
 
 const Title = styled.h1`
   font-family: 'Montserrat', sans-serif;
   font-size: 1.875rem;
   font-weight: 700;
   color: #333;
-  
+
   @media (max-width: 640px) {
     font-size: 1.5rem;
   }
-`
+`;
 
 const Content = styled.div`
   line-height: 1.8;
   color: #374151;
-  
+
   h2 {
     font-size: 1.25rem;
     font-weight: 600;
     margin: 2rem 0 1rem 0;
     color: #1f2937;
   }
-  
+
   h3 {
     font-size: 1.125rem;
     font-weight: 600;
     margin: 1.5rem 0 0.75rem 0;
     color: #374151;
   }
-  
+
   p {
     margin-bottom: 1rem;
   }
-  
+
   ul {
     margin: 1rem 0;
     padding-left: 1.5rem;
-    
+
     li {
       margin-bottom: 0.5rem;
     }
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
-    
+
     th, td {
       border: 1px solid #e5e7eb;
       padding: 0.75rem;
       text-align: left;
     }
-    
+
     th {
       background-color: #f9fafb;
       font-weight: 600;
     }
   }
-`
+`;
 
 const LastUpdated = styled.div`
   margin-top: 2rem;
@@ -109,20 +110,20 @@ const LastUpdated = styled.div`
   font-size: 0.875rem;
   color: #6b7280;
   text-align: center;
-`
+`;
 
 export default function PrivacyPage() {
+  const router = useRouter();
+
   return (
     <MainContainer>
       <MainContent>
         <ContentContainer>
           <Header>
-            <Link href="/signup">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft size={16} style={{ marginRight: "0.5rem" }} />
-                돌아가기
-              </Button>
-            </Link>
+            <Button variant="ghost" size="sm" onClick={router.back}>
+              <ArrowLeft size={16} style={{ marginRight: "0.5rem" }} />
+              돌아가기
+            </Button>
             <Title>개인정보 처리방침</Title>
           </Header>
 
@@ -155,24 +156,24 @@ export default function PrivacyPage() {
             <h3>2. 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.</h3>
             <table>
               <thead>
-                <tr>
-                  <th>처리목적</th>
-                  <th>보유기간</th>
-                </tr>
+              <tr>
+                <th>처리목적</th>
+                <th>보유기간</th>
+              </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>회원 가입 및 관리</td>
-                  <td>회원 탈퇴 시까지</td>
-                </tr>
-                <tr>
-                  <td>재화 또는 서비스 제공</td>
-                  <td>재화·서비스 공급완료 및 요금결제·정산 완료시까지</td>
-                </tr>
-                <tr>
-                  <td>마케팅 및 광고 활용</td>
-                  <td>동의철회 시까지</td>
-                </tr>
+              <tr>
+                <td>회원 가입 및 관리</td>
+                <td>회원 탈퇴 시까지</td>
+              </tr>
+              <tr>
+                <td>재화 또는 서비스 제공</td>
+                <td>재화·서비스 공급완료 및 요금결제·정산 완료시까지</td>
+              </tr>
+              <tr>
+                <td>마케팅 및 광고 활용</td>
+                <td>동의철회 시까지</td>
+              </tr>
               </tbody>
             </table>
 
@@ -198,20 +199,20 @@ export default function PrivacyPage() {
             <p>회사는 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
             <table>
               <thead>
-                <tr>
-                  <th>위탁받는 자</th>
-                  <th>위탁하는 업무의 내용</th>
-                </tr>
+              <tr>
+                <th>위탁받는 자</th>
+                <th>위탁하는 업무의 내용</th>
+              </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>AWS (Amazon Web Services)</td>
-                  <td>클라우드 서비스 제공 및 데이터 보관</td>
-                </tr>
-                <tr>
-                  <td>Google Analytics</td>
-                  <td>서비스 이용 통계 분석</td>
-                </tr>
+              <tr>
+                <td>AWS (Amazon Web Services)</td>
+                <td>클라우드 서비스 제공 및 데이터 보관</td>
+              </tr>
+              <tr>
+                <td>Google Analytics</td>
+                <td>서비스 이용 통계 분석</td>
+              </tr>
               </tbody>
             </table>
 
@@ -281,5 +282,5 @@ export default function PrivacyPage() {
         </ContentContainer>
       </MainContent>
     </MainContainer>
-  )
+  );
 }

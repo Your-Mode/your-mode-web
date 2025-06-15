@@ -476,7 +476,7 @@ export default function SignupPage() {
                       <RequiredBadge>(필수)</RequiredBadge>
                     </AgreementLabel>
                     <AgreementLinks>
-                      <AgreementLink href="/terms">전체보기</AgreementLink>
+                      <AgreementLink href="/policy/service">전체보기</AgreementLink>
                     </AgreementLinks>
                     {errors.termsAgreed && <ErrorText>{errors.termsAgreed}</ErrorText>}
                   </div>
@@ -494,7 +494,7 @@ export default function SignupPage() {
                       <RequiredBadge>(필수)</RequiredBadge>
                     </AgreementLabel>
                     <AgreementLinks>
-                      <AgreementLink href="/privacy">전체보기</AgreementLink>
+                      <AgreementLink href="/policy/privacy">전체보기</AgreementLink>
                     </AgreementLinks>
                     {errors.privacyAgreed && <ErrorText>{errors.privacyAgreed}</ErrorText>}
                   </div>
