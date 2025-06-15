@@ -1,5 +1,5 @@
-import { Question } from "@/src/shared/types/body-type";
-import { ContentItem } from "@/src/shared/types/content";
+import { BodyAnalysisResult, Question } from "@/src/shared/types/body-type";
+import { ContentItem, MyContentItem } from "@/src/shared/types/content";
 
 export const questions: Question[] = [
   {
@@ -492,5 +492,193 @@ export const editorContent: ContentItem[] = [
     comments: 6,
     date: "2025년 06월 05일",
     createdAt: new Date("2025-06-05"),
+  },
+];
+
+export const myCustomContents: MyContentItem[] = [
+  {
+    id: "mc-001",
+    title: "오피스 룩 스타일링 요청",
+    description:
+      "직장에서 입을 수 있는 세미 캐주얼 스타일 추천을 요청했습니다. 키 165cm, 웨이브 체형에 맞는 전문적이면서도 편안한 스타일을 원합니다.",
+    status: "in-progress",
+    progress: 75,
+    applicationDate: "2025년 5월 15일",
+    expectedDate: "2025년 5월 22일",
+    editorName: "김스타일",
+    items: ["아우터", "상의", "하의", "신발"],
+    timeline: [
+      { step: "신청 접수", completed: true, date: "2025년 5월 15일" },
+      { step: "에디터 배정", completed: true, date: "2025년 5월 16일" },
+      { step: "스타일링 제작", completed: true, date: "진행 중" },
+      { step: "검토 및 수정", completed: false, date: "" },
+      { step: "최종 완성", completed: false, date: "" },
+    ],
+  },
+  {
+    id: "mc-002",
+    title: "데이트 룩 스타일링 요청",
+    description:
+      "주말 데이트에 어울리는 캐주얼하면서도 세련된 스타일을 요청했습니다. 20대 후반, 웨이브 체형에 맞는 로맨틱한 느낌의 코디를 원합니다.",
+    status: "assigned",
+    progress: 25,
+    applicationDate: "2025년 5월 20일",
+    expectedDate: "2025년 5월 27일",
+    editorName: "박패션",
+    items: ["원피스", "악세서리", "가방"],
+    timeline: [
+      { step: "신청 접수", completed: true, date: "2025년 5월 20일" },
+      { step: "에디터 배정", completed: true, date: "2025년 5월 21일" },
+      { step: "스타일링 제작", completed: false, date: "" },
+      { step: "검토 및 수정", completed: false, date: "" },
+      { step: "최종 완성", completed: false, date: "" },
+    ],
+  },
+  {
+    id: "mc-003",
+    title: "여름 휴가 스타일링 요청",
+    description:
+      "해변 리조트에서 입을 수 있는 시원하고 편안한 스타일을 요청했습니다. 30대 초반, 웨이브 체형에 맞는 리조트 룩을 원합니다.",
+    status: "completed",
+    progress: 100,
+    applicationDate: "2025년 4월 10일",
+    expectedDate: "2025년 4월 17일",
+    editorName: "이디자인",
+    items: ["상의", "하의", "신발", "모자"],
+    timeline: [
+      { step: "신청 접수", completed: true, date: "2025년 4월 10일" },
+      { step: "에디터 배정", completed: true, date: "2025년 4월 11일" },
+      { step: "스타일링 제작", completed: true, date: "2025년 4월 15일" },
+      { step: "검토 및 수정", completed: true, date: "2025년 4월 16일" },
+      { step: "최종 완성", completed: true, date: "2025년 4월 17일" },
+    ],
+  },
+  {
+    id: "mc-004",
+    title: "결혼식 하객 룩 스타일링 요청",
+    description:
+      "친구 결혼식에 참석할 때 입을 수 있는 격식 있는 스타일을 요청했습니다. 웨이브 체형에 맞는 우아하고 단정한 룩을 원합니다.",
+    status: "pending",
+    progress: 10,
+    applicationDate: "2025년 5월 25일",
+    expectedDate: "2025년 6월 1일",
+    items: ["원피스", "악세서리", "신발", "가방"],
+    timeline: [
+      { step: "신청 접수", completed: true, date: "2025년 5월 25일" },
+      { step: "에디터 배정", completed: false, date: "" },
+      { step: "스타일링 제작", completed: false, date: "" },
+      { step: "검토 및 수정", completed: false, date: "" },
+      { step: "최종 완성", completed: false, date: "" },
+    ],
+  },
+];
+
+// 체형분석 결과 데이터
+export const bodyAnalysisResult: BodyAnalysisResult = {
+  id: "analysis-001",
+  type: "wave",
+  analysisDate: "2025년 6월 10일",
+  title: "웨이브 타입",
+  description:
+    "우아하고 여성스러운 매력을 가진 체형입니다. 부드러운 곡선과 유연한 라인으로 로맨틱하고 페미닌한 스타일이 잘 어울립니다.",
+  gradient: "from-rose-400 to-pink-500",
+};
+
+export const favorites = [
+  {
+    id: "fav-1",
+    title: "웨이브 체형을 위한 여름 코디",
+    bodyType: "웨이브",
+    likes: 142,
+    comments: 28,
+    date: "2025년 06월 10일",
+    isLiked: true,
+  },
+  {
+    id: "fav-2",
+    title: "오피스 룩 스타일링 가이드",
+    bodyType: "웨이브",
+    likes: 98,
+    comments: 15,
+    date: "2025년 06월 05일",
+    isLiked: true,
+  },
+  {
+    id: "fav-3",
+    title: "데이트 룩 추천: 웨이브 체형",
+    bodyType: "웨이브",
+    likes: 120,
+    comments: 22,
+    date: "2025년 05월 28일",
+    isLiked: true,
+  },
+  {
+    id: "fav-4",
+    title: "캐주얼 스타일링 완벽 가이드",
+    bodyType: "웨이브",
+    likes: 87,
+    comments: 19,
+    date: "2025년 05월 25일",
+    isLiked: true,
+  },
+  {
+    id: "fav-5",
+    title: "가을 트렌드 스타일링",
+    bodyType: "웨이브",
+    likes: 156,
+    comments: 34,
+    date: "2025년 05월 20일",
+    isLiked: true,
+  },
+];
+
+export const recentViewed = [
+  {
+    id: "recent-1",
+    title: "스트레이트 체형을 위한 겨울 코디",
+    bodyType: "스트레이트",
+    likes: 203,
+    comments: 45,
+    date: "2025년 06월 12일",
+    viewedAt: "2시간 전",
+  },
+  {
+    id: "recent-2",
+    title: "내추럴 체형의 봄 스타일링",
+    bodyType: "내추럴",
+    likes: 178,
+    comments: 32,
+    date: "2025년 06월 11일",
+    viewedAt: "1일 전",
+  },
+  {
+    id: "recent-3",
+    title: "웨이브 체형을 위한 파티 룩",
+    bodyType: "웨이브",
+    likes: 234,
+    comments: 56,
+    date: "2025년 06월 10일",
+    viewedAt: "2일 전",
+  },
+];
+
+export const commentedContents = [
+  {
+    id: "comment-1",
+    title: "체형별 청바지 추천 가이드",
+    bodyType: "웨이브",
+    likes: 189,
+    comments: 67,
+    date: "2025년 06월 08일",
+    myComment: "정말 유용한 정보네요! 감사합니다 ✨",
+  },
+  {
+    id: "comment-2",
+    title: "여름 원피스 스타일링 팁",
+    bodyType: "웨이브",
+    likes: 145,
+    comments: 43,
+    date: "2025년 06월 05일",
+    myComment: "이런 스타일 찾고 있었어요!",
   },
 ];

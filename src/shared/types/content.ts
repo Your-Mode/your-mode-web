@@ -11,3 +11,22 @@ export interface ContentItem {
   date: string;
   createdAt: Date;
 }
+
+export type ContentStatus = "pending" | "assigned" | "in-progress" | "review" | "completed" | "cancelled"
+
+export interface MyContentItem {
+  id: string;
+  title: string;
+  description: string;
+  status: ContentStatus;
+  progress: number;
+  applicationDate: string;
+  expectedDate?: string;
+  editorName?: string;
+  items: string[];
+  timeline: {
+    step: string
+    completed: boolean
+    date?: string
+  }[];
+}

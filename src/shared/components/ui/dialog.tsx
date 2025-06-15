@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/src/shared/lib/utils"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const Dialog = DialogPrimitive.Root
 
@@ -35,6 +36,9 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
+    <VisuallyHidden>
+      <DialogTitle>내 모달 제목</DialogTitle>
+    </VisuallyHidden>
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
