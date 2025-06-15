@@ -421,7 +421,7 @@ export default function AdditionalInfoPage() {
                       <RequiredBadge>(필수)</RequiredBadge>
                     </AgreementLabel>
                     <AgreementLinks>
-                      <AgreementLink href="/policy/service">전체보기</AgreementLink>
+                      <AgreementLink href="/policy/term">전체보기</AgreementLink>
                     </AgreementLinks>
                     {errors.termsAgreed && <ErrorText>{errors.termsAgreed}</ErrorText>}
                   </div>
