@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { customContents, editorContents, trendingContents } from "@/src/shared/api/mock";
 import HomeContentSection from "@/src/widgets/home/ui/HomeContentSection";
 
-export default function HomePage() {
+export default function HomeView() {
   return (
     <MainContainer>
       <HeroCarousel />

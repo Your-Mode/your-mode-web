@@ -1,5 +1,6 @@
-import HomePage from "@/src/views/home/ui/home-page"
+import HomeView from "@/src/widgets/home/ui/HomeView";
+
 
 export default function Home() {
-  return <HomePage />
+  return <HomeView />
 }
