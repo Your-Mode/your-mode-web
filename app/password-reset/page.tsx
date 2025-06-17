@@ -4,9 +4,9 @@ import type React from "react";
 import { Phone } from "lucide-react";
 import styled from "@emotion/styled";
 import InnerHeader from "@/src/shared/components/InnerHeader";
-import CodeStep from "@/src/widgets/auth/ui/CodeStep";
-import PasswordStep from "@/src/widgets/auth/ui/PasswordStep";
-import PhoneStep from "@/src/widgets/auth/ui/PhoneStep";
+import CodeStep from "@/src/widgets/auth/ui/passwordReset/CodeStep";
+import PasswordStep from "@/src/widgets/auth/ui/passwordReset/PasswordStep";
+import PhoneStep from "@/src/widgets/auth/ui/passwordReset/PhoneStep";
 import { useHandlePasswordReset } from "@/src/widgets/auth/feature/hooks/useHandlePasswordReset";
 import { getDescription } from "@/src/widgets/auth/feature/utils/utils";
 
