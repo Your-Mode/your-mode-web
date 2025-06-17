@@ -1,5 +1,3 @@
-import { Label } from "@/src/shared/components/ui/label";
-import { Checkbox } from "@/src/shared/components/ui/checkbox";
 import BodyInfo from "@/src/widgets/auth/ui/sign-up/BodyInfo";
 import Gender from "@/src/widgets/auth/ui/sign-up/Gender";
 import BodyType from "@/src/widgets/auth/ui/sign-up/BodyType";
@@ -14,7 +12,7 @@ import Password from "@/src/widgets/auth/ui/sign-up/Password";
 
 const SignupForm = () => {
   const router = useRouter();
-  const { watch, register, control, handleSubmit, formState: { errors, isSubmitting } } = useHandleSighup();
+  const { watch, register, control, handleSubmit, formState: { errors } } = useHandleSighup();
 
   const onSubmit = () => {
     // Success - redirect to success page
@@ -27,6 +25,7 @@ const SignupForm = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <CustomFormGroup
           id="email" register={register}
+          label="이메일"
           errors={errors}
           name="email"
           type="email"
@@ -36,6 +35,7 @@ const SignupForm = () => {
         <Password register={register} errors={errors} watch={watch} />
         <CustomFormGroup
           id="confirmPassword"
+          label="비밀번호 확인"
           register={register}
           errors={errors}
           name="confirmPassword"
@@ -45,6 +45,7 @@ const SignupForm = () => {
         />
         <CustomFormGroup
           id="name"
+          label="이름"
           register={register}
           errors={errors}
           name="name"
@@ -54,6 +55,7 @@ const SignupForm = () => {
         />
         <CustomFormGroup
           id="phone"
+          label="휴대폰 번호"
           register={register}
           errors={errors}
           name="phone"

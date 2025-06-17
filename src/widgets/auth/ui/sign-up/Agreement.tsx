@@ -3,28 +3,32 @@ import { Checkbox } from "@/src/shared/components/ui/checkbox";
 import type React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Control, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
 import { SignUpForm } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { InfoForm } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 
-interface AgreementProps {
-  control: Control<SignUpForm>
-  errors: FieldErrors<SignUpForm>
+interface AgreementProps<T extends SignUpForm | InfoForm> {
+  control: Control<T>
+  errors: FieldErrors<T>
 }
 
-const Agreement = ({ control, errors }: AgreementProps) => {
+const Agreement = <T extends SignUpForm | InfoForm> ({ control, errors }: AgreementProps<T>) => {
+  const termsError = errors?.termsAgreed as FieldError | undefined;
+  const privacyError = errors?.privacyAgreed as FieldError | undefined;
+
   return (
     <FormGroup>
       <Label>약관 동의</Label>
       <AgreementSection>
         {/* 서비스 이용약관 */}
         <Controller
-          name="termsAgreed"
+          name={"termsAgreed" as Path<T>}
           control={control}
           render={({ field }) => (
             <AgreementItem>
               <Checkbox
                 id="termsAgreed"
-                checked={field.value}
+                checked={!!field.value}
                 onCheckedChange={(checked) => field.onChange(checked as boolean)}
               />
               <div>
@@ -35,7 +39,7 @@ const Agreement = ({ control, errors }: AgreementProps) => {
                 <AgreementLinks>
                   <AgreementLink href="/policy/term">전체보기</AgreementLink>
                 </AgreementLinks>
-                {errors.termsAgreed && <ErrorText>{errors.termsAgreed.message}</ErrorText>}
+                {termsError && <ErrorText>{termsError.message}</ErrorText>}
               </div>
             </AgreementItem>
           )}
@@ -43,13 +47,13 @@ const Agreement = ({ control, errors }: AgreementProps) => {
 
         {/* 개인정보 처리방침 */}
         <Controller
-          name="privacyAgreed"
+          name={"privacyAgreed" as Path<T>}
           control={control}
           render={({ field }) => (
             <AgreementItem>
               <Checkbox
                 id="privacyAgreed"
-                checked={field.value}
+                checked={!!field.value}
                 onCheckedChange={(checked) => field.onChange(checked as boolean)}
               />
               <div>
@@ -60,7 +64,7 @@ const Agreement = ({ control, errors }: AgreementProps) => {
                 <AgreementLinks>
                   <AgreementLink href="/policy/privacy">전체보기</AgreementLink>
                 </AgreementLinks>
-                {errors.privacyAgreed && <ErrorText>{errors.privacyAgreed.message}</ErrorText>}
+                {privacyError && <ErrorText>{privacyError.message}</ErrorText>}
               </div>
             </AgreementItem>
           )}
@@ -68,13 +72,13 @@ const Agreement = ({ control, errors }: AgreementProps) => {
 
         {/* 마케팅 정보 수신 */}
         <Controller
-          name="marketingAgreed"
+          name={"marketingAgreed" as Path<T>}
           control={control}
           render={({ field }) => (
             <AgreementItem>
               <Checkbox
                 id="marketingAgreed"
-                checked={field.value}
+                checked={!!field.value}
                 onCheckedChange={(checked) => field.onChange(checked as boolean)}
               />
               <div>

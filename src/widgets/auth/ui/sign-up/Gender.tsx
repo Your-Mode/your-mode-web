@@ -1,18 +1,21 @@
 import { Label } from "@/src/shared/components/ui/label";
 import type React from "react";
 import styled from "@emotion/styled";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Control, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
 import { SignUpForm } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { InfoForm } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 
-interface GenderProps {
-  control: Control<SignUpForm>;
-  errors?: FieldErrors<SignUpForm>;
+interface GenderProps<T extends SignUpForm | InfoForm> {
+  control: Control<T>;
+  errors?: FieldErrors<T>;
 }
 
-const Gender = ({ control, errors }: GenderProps) => {
+const Gender = <T extends SignUpForm | InfoForm>({ control, errors }: GenderProps<T>) => {
+  const genderError = errors?.height as FieldError | undefined;
+
   return (
     <Controller
-      name="gender"
+      name={"gender" as Path<T>}
       control={control}
       render={({ field }) => (
         <FormGroup>
@@ -33,7 +36,7 @@ const Gender = ({ control, errors }: GenderProps) => {
               여성
             </SelectionButton>
           </ButtonGroup>
-          {errors?.gender && <ErrorText>{errors.gender.message}</ErrorText>}
+          {genderError && <ErrorText>{genderError.message}</ErrorText>}
         </FormGroup>
       )} />
   );

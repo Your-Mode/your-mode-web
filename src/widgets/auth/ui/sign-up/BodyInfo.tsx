@@ -2,15 +2,19 @@ import { Label } from "@/src/shared/components/ui/label";
 import type React from "react";
 import styled from "@emotion/styled";
 import { Input } from "@/src/shared/components/ui/input";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldError, FieldErrors, Path, UseFormRegister } from "react-hook-form";
 import { SignUpForm } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { InfoForm } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 
-interface BodyInfoProps {
-  register: UseFormRegister<SignUpForm>
-  errors?: FieldErrors<SignUpForm>
+interface BodyInfoProps<T extends SignUpForm | InfoForm> {
+  register: UseFormRegister<T>;
+  errors?: FieldErrors<T>;
 }
 
-const BodyInfo = ({ register, errors }: BodyInfoProps) => {
+const BodyInfo = <T extends SignUpForm | InfoForm>({ register, errors }: BodyInfoProps<T>) => {
+  const heightError = errors?.height as FieldError | undefined;
+  const weightError = errors?.weight as FieldError | undefined;
+
   return (
     <FormRow>
       <FormGroup>
@@ -19,9 +23,9 @@ const BodyInfo = ({ register, errors }: BodyInfoProps) => {
           id="height"
           type="number"
           placeholder="ex) 165"
-          {...register('height')}
+          {...register('height' as Path<T>)}
         />
-        {errors?.height && <ErrorText>{errors.height.message}</ErrorText>}
+        {heightError && <ErrorText>{heightError.message}</ErrorText>}
       </FormGroup>
 
       <FormGroup>
@@ -30,9 +34,9 @@ const BodyInfo = ({ register, errors }: BodyInfoProps) => {
           id="weight"
           type="number"
           placeholder="ex) 55"
-          {...register('weight')}
+          {...register('weight' as Path<T>)}
         />
-        {errors?.weight && <ErrorText>{errors.weight.message}</ErrorText>}
+        {weightError && <ErrorText>{weightError.message}</ErrorText>}
       </FormGroup>
     </FormRow>
   );

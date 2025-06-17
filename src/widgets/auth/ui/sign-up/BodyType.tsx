@@ -1,18 +1,20 @@
 import { Label } from "@/src/shared/components/ui/label";
 import type React from "react";
 import styled from "@emotion/styled";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Control, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
 import { SignUpForm } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { InfoForm } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 
-interface BodyTypeProps {
-  control: Control<SignUpForm>;
-  errors: FieldErrors<SignUpForm>;
+interface BodyTypeProps<T extends SignUpForm | InfoForm> {
+  control: Control<T>;
+  errors?: FieldErrors<T>;
 }
 
-const BodyType = ({ control, errors }: BodyTypeProps) => {
+const BodyType = <T extends SignUpForm | InfoForm>({ control, errors }: BodyTypeProps<T>) => {
+  const bodyTypeError = errors?.bodyType as FieldError | undefined;
   return (
     <Controller
-      name="bodyType"
+      name={"bodyType" as Path<T>}
       control={control}
       render={({ field }) => (
         <FormGroup>
@@ -52,7 +54,7 @@ const BodyType = ({ control, errors }: BodyTypeProps) => {
             <br />
             유어모드에서 제공하는 AI 기반 체형진단을 이용해보세요
           </HelpText>
-          {errors.bodyType && <ErrorText>{errors.bodyType.message}</ErrorText>}
+          {bodyTypeError && <ErrorText>{bodyTypeError.message}</ErrorText>}
         </FormGroup>
       )}
     />

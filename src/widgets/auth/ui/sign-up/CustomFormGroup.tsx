@@ -2,30 +2,33 @@ import { Label } from "@/src/shared/components/ui/label";
 import type React from "react";
 import styled from "@emotion/styled";
 import { Input } from "@/src/shared/components/ui/input";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldError, FieldErrors, Path, UseFormRegister } from "react-hook-form";
 import { SignUpForm } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { InfoForm } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 
-interface CustomFormGroupProps {
+interface CustomFormGroupProps<T extends SignUpForm | InfoForm, N extends Path<T> & keyof T> {
   id: string;
-  register: UseFormRegister<SignUpForm>;
-  errors: FieldErrors<SignUpForm>;
-  name: keyof SignUpForm;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
+  name: N;
   type: string;
   htmlFor: string;
   placeholder: string;
+  label: string;
 }
 
-const CustomFormGroup = ({ id, register, errors, htmlFor, type, name, placeholder }: CustomFormGroupProps) => {
+const CustomFormGroup = <T extends SignUpForm | InfoForm, N extends Path<T> & keyof T>({ id, register, errors, htmlFor, type, name, placeholder, label }: CustomFormGroupProps<T, N>) => {
+  const fieldError = errors[name] as FieldError | undefined
   return (
     <FormGroup>
-      <Label htmlFor={htmlFor}>이메일</Label>
+      <Label htmlFor={htmlFor}>{label}</Label>
       <StyledInput
         id={id}
         type={type}
         placeholder={placeholder}
         {...register(name)}
       />
-      {errors[name] && <ErrorText>{errors[name].message}</ErrorText>}
+      {fieldError && <ErrorText>{fieldError.message}</ErrorText>}
     </FormGroup>
   );
 };
