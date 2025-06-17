@@ -2,7 +2,8 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 import { CheckCircle, Heart, Sparkles } from "lucide-react";
 import { keyframes } from "@emotion/react";
-import { Button } from "react-day-picker";
+import { Button } from "@/src/shared/components/ui/button";
+
 
 const Success = () => {
   return (
