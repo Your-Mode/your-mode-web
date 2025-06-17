@@ -682,3 +682,93 @@ export const commentedContents = [
     myComment: "이런 스타일 찾고 있었어요!",
   },
 ];
+
+export const trendingContents: Omit<ContentItem, "createdAt">[] = [
+  {
+    id: "1",
+    title: "전문 에디터의 스타일링 노하우",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "웨이브",
+    likes: 200,
+    comments: 45,
+    date: "2025년 06월 16일",
+  },
+  {
+    id: "2",
+    title: "트렌드 분석: 2025 봄 패션",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "내추럴",
+    likes: 178,
+    comments: 38,
+    date: "2025년 06월 15일",
+  },
+  {
+    id: "3",
+    title: "스트레이트 체형을 위한 데일리 룩",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "스트레이트",
+    likes: 156,
+    comments: 32,
+    date: "2025년 06월 14일",
+  },
+];
+
+export const editorContents: Omit<ContentItem, "createdAt">[] = [
+  {
+    id: "5",
+    title: "미니멀리즘의 귀환: 심플한 스타일링",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "내추럴",
+    likes: 112,
+    comments: 19,
+    date: "2025년 06월 12일",
+  },
+  {
+    id: "6",
+    title: "오버사이즈 코트의 계절별 활용법",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "스트레이트",
+    likes: 98,
+    comments: 21,
+    date: "2025년 06월 11일",
+  },
+  {
+    id: "7",
+    title: "웨이브 체형을 위한 액세서리 매칭",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "웨이브",
+    likes: 87,
+    comments: 16,
+    date: "2025년 06월 10일",
+  },
+];
+
+export const customContents: Omit<ContentItem, "createdAt">[] = [
+  {
+    id: "9",
+    title: "당신만을 위한 맞춤 스타일링 가이드",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "웨이브",
+    likes: 245,
+    comments: 52,
+    date: "2025년 06월 18일",
+  },
+  {
+    id: "10",
+    title: "체형별 완벽한 데님 스타일링",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "스트레이트",
+    likes: 189,
+    comments: 41,
+    date: "2025년 06월 17일",
+  },
+  {
+    id: "11",
+    title: "개인 맞춤형 컬러 팔레트 추천",
+    image: "/placeholder.svg?height=120&width=280",
+    bodyType: "내추럴",
+    likes: 167,
+    comments: 35,
+    date: "2025년 06월 16일",
+  },
+];
