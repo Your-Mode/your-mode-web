@@ -1,4 +1,4 @@
-export { default as ContentGrid } from "./ui/content-grid"
-export { default as ContentTabs } from "./ui/content-tabs"
-export { default as EmptyState } from "./ui/empty-state"
-export { default as ProfileHeader } from "./ui/profile-header"
+export { default as ContentGrid } from "./ui/ContentGrid"
+export { default as ContentTabs } from "./ui/ContentTabs"
+export { default as EmptyState } from "./ui/EmptyState"
+export { default as ProfileHeader } from "./ui/ProfileHeader"
