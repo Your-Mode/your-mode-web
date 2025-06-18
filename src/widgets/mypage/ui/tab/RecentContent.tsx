@@ -1,13 +1,13 @@
-import ContentGrid from "./ContentGrid";
-import { commentedContents } from "@/src/shared/api/mock";
+import ContentGrid from "../ContentGrid";
+import { recentViewed } from "@/src/shared/api/mock";
 import ContentCardComponent from "@/src/widgets/content/ui/content-card";
 import { TabsContent } from "@/src/shared/components/ui/tabs";
 
-const CommentContent = () => {
+const RecentContent = () => {
   return (
-    <TabsContent value="comments">
+    <TabsContent value="recent">
       <ContentGrid>
-        {commentedContents.map((content) => (
+        {recentViewed.map((content) => (
           <ContentCardComponent
             key={content.id}
             id={content.id}
@@ -16,8 +16,7 @@ const CommentContent = () => {
             date={content.date}
             likes={content.likes}
             comments={content.comments}
-            myComment={content.myComment}
-            iconType="comment"
+            iconType="view"
           />
         ))}
       </ContentGrid>
@@ -25,4 +24,4 @@ const CommentContent = () => {
   );
 };
 
-export default CommentContent;
+export default RecentContent;

@@ -5,12 +5,12 @@ import { Tabs } from "@/src/shared/components/ui/tabs";
 import ProfileHeader from "@/src/widgets/mypage/ui/ProfileHeader";
 import ContentTabs from "@/src/widgets/mypage/ui/ContentTabs";
 import styled from "@emotion/styled";
-import MyOwnContent from "@/src/widgets/mypage/ui/MyOwnContent";
-import ProgressContent from "@/src/widgets/mypage/ui/ProgressContent";
-import FavoritesContent from "@/src/widgets/mypage/ui/FavoritesContent";
-import CommentContent from "@/src/widgets/mypage/ui/CommentContent";
-import RecentContent from "@/src/widgets/mypage/ui/RecentContent";
-import BodyAnalysis from "@/src/widgets/mypage/ui/BodyAnalysis";
+import MyOwnContent from "@/src/widgets/mypage/ui/tab/MyOwnContent";
+import ProgressContent from "@/src/widgets/mypage/ui/tab/progress/ProgressContent";
+import FavoritesContent from "@/src/widgets/mypage/ui/tab/FavoritesContent";
+import CommentContent from "@/src/widgets/mypage/ui/tab/CommentContent";
+import RecentContent from "@/src/widgets/mypage/ui/tab/RecentContent";
+import BodyAnalysis from "@/src/widgets/mypage/ui/tab/BodyAnalysis";
 import ThankYouModal from "@/src/widgets/mypage/ui/ThankYouModal";
 
 export default function MyPage() {

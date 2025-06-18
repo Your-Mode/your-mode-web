@@ -1,4 +1,4 @@
-import ContentGrid from "./ContentGrid";
+import ContentGrid from "../ContentGrid";
 import { favorites } from "@/src/shared/api/mock";
 import ContentCardComponent from "@/src/widgets/content/ui/content-card";
 import { TabsContent } from "@/src/shared/components/ui/tabs";
