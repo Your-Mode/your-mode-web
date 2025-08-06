@@ -23,15 +23,15 @@ const Gender = <T extends SignUpForm | InfoForm>({ control, errors }: GenderProp
           <ButtonGroup>
             <SelectionButton
               type="button"
-              selected={field.value === "male"}
-              onClick={() => field.onChange('male')}
+              selected={field.value === "MALE"}
+              onClick={() => field.onChange('MALE')}
             >
               남성
             </SelectionButton>
             <SelectionButton
               type="button"
-              selected={field.value === "female"}
-              onClick={() => field.onChange('female')}
+              selected={field.value === "FEMALE"}
+              onClick={() => field.onChange('FEMALE')}
             >
               여성
             </SelectionButton>

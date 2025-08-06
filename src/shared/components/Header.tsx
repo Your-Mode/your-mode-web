@@ -350,7 +350,7 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
-  const { isLoggedIn, user, logout, toggleLogin } = useAuthStore()
+  const { isLoggedIn, user, logout } = useAuthStore()
 
   const isHomeActive = pathname === "/"
   const isContentsActive = pathname.startsWith("/contents") || pathname.startsWith("/content/")
@@ -399,26 +399,6 @@ export default function Header() {
 
   return (
     <>
-      {/* 개발용 로그인 토글 버튼 - 우측 상단 */}
-      <div
-        style={{
-          position: "fixed",
-          top: "0.5rem",
-          right: "0.5rem",
-          background: "#ef4444",
-          color: "white",
-          padding: "0.125rem 0.25rem",
-          fontSize: "0.625rem",
-          cursor: "pointer",
-          borderRadius: "2px",
-          zIndex: 9999,
-          lineHeight: "1",
-        }}
-        onClick={toggleLogin}
-      >
-        DEV
-      </div>
-
       <HeaderContainer>
         <HeaderContent>
           <NavContainer>

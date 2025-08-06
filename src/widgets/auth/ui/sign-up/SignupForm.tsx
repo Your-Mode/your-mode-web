@@ -5,18 +5,17 @@ import Agreement from "@/src/widgets/auth/ui/sign-up/Agreement";
 import type React from "react";
 import styled from "@emotion/styled";
 import { Button } from "@/src/shared/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useHandleSighup } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
+import { SignUpForm, useHandleSighup } from "@/src/widgets/auth/feature/hooks/useHandleSighup";
 import CustomFormGroup from "@/src/widgets/auth/ui/sign-up/CustomFormGroup";
 import Password from "@/src/widgets/auth/ui/sign-up/Password";
+import { usePostSignUp } from "@/src/widgets/auth/feature/mutation/usePostSignUp";
 
 const SignupForm = () => {
-  const router = useRouter();
-  const { watch, register, control, handleSubmit, formState: { errors } } = useHandleSighup();
+  const { watch, register, control, handleSubmit, formState: { errors }, getValues } = useHandleSighup();
+  const { mutate, isPending, isError } = usePostSignUp();
 
-  const onSubmit = () => {
-    // Success - redirect to success page
-    router.push("/signup/success");
+  const onSubmit = (formData: SignUpForm) => {
+    console.log(formData);
   };
 
   return (
@@ -67,7 +66,7 @@ const SignupForm = () => {
         <Gender control={control} errors={errors} />
         <BodyType control={control} errors={errors} />
         <Agreement control={control} errors={errors} />
-        <SubmitButton type="submit">가입하기</SubmitButton>
+        <SubmitButton type="submit" onClick={() => mutate(getValues())} disabled={isPending}>{isPending ? '회원가입중...' : '가입하기'}</SubmitButton>
       </Form>
     </FormContainer>
   );
