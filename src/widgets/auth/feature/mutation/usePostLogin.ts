@@ -13,7 +13,7 @@ export const usePostLogin = () => {
           name: data.result.user.name,
           email: data.result.user.email,
         };
-        loginStore(user);
+        loginStore(data.result.accessToken, user);
       }
     },
     onError: (error) => {
