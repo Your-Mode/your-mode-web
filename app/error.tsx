@@ -3,24 +3,10 @@
 import { useEffect } from "react"
 import { Button } from "@/src/shared/components/ui/button"
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
-  useEffect(() => {
-    // 오류 로깅
-    console.error(error)
-  }, [error])
+export default function Error() {
 
   const handleReset = () => {
-    if (typeof reset === "function") {
-      reset()
-    } else {
-      window.location.reload()
-    }
+    window.location.reload()
   }
 
   return (
