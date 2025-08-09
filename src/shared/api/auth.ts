@@ -19,7 +19,8 @@ export const login = async (loginRequest: LoginRequest) => {
     return response.data;
   } catch ( error ) {
     if (axios.isAxiosError(error)) {
-      if (error.response?.data.code === 'AUTH-401-001' || error.response?.data.code === 'AUTH-401-002') {
+      console.log(error.response?.data.code);
+      if (error.response?.data.code === 'AUTH-401-001' || error.response?.data.code === 'AUTH-401-002' || error.response?.data.code === 'AUTH-401-005') {
         throw new Error(error.response?.data.message)
       } else {
         throw new Error("로그인에 실패했습니다. 다시 시도해주세요.");
@@ -27,3 +28,13 @@ export const login = async (loginRequest: LoginRequest) => {
     }
   }
 };
+
+export const logout = async () => {
+  try {
+    await axiosInstance.post('/auth/logout');
+  } catch ( error ) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+}
