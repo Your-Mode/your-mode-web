@@ -6,9 +6,9 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
 
 interface ProfileHeaderProps {
-  name: string;
-  bodyType: string;
-  email: string;
+  name?: string;
+  bodyType?: string;
+  email?: string;
   stats: {
     customContents: number
     favorites: number
@@ -16,7 +16,7 @@ interface ProfileHeaderProps {
   };
 }
 
-export default function ProfileHeader({ name, bodyType, email, stats }: ProfileHeaderProps) {
+const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => {
   const router = useRouter();
 
   const handleEditClick = () => {
@@ -70,6 +70,8 @@ export default function ProfileHeader({ name, bodyType, email, stats }: ProfileH
     </ProfileHeaderContainer>
   );
 }
+
+export default ProfileHeader;
 
 const ProfileHeaderContainer = styled.div`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.background.primary} 0%, ${({ theme }) => theme.colors.primary[50]} 100%);

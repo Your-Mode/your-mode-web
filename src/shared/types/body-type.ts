@@ -1,11 +1,11 @@
 export interface Question {
-  id: number
-  question: string
+  id: number;
+  question: string;
   options: {
     text: string
     type: "natural" | "wave" | "straight"
     image?: string
-  }[]
+  }[];
 }
 
 export interface BodyAnalysisResult {
