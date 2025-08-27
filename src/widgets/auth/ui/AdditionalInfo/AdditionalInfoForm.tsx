@@ -3,19 +3,45 @@ import type React from "react";
 import styled from "@emotion/styled";
 import Agreement from "@/src/widgets/auth/ui/sign-up/Agreement";
 import { useRouter } from "next/navigation";
-import { useHandleAdditionalInfo } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
+import { InfoForm, useHandleAdditionalInfo } from "@/src/widgets/auth/feature/hooks/useHandleAdditionalInfo";
 import BodyType from "@/src/widgets/auth/ui/sign-up/BodyType";
 import Gender from "@/src/widgets/auth/ui/sign-up/Gender";
 import BodyInfo from "@/src/widgets/auth/ui/sign-up/BodyInfo";
 import CustomFormGroup from "@/src/widgets/auth/ui/sign-up/CustomFormGroup";
+import { useMutation } from "@tanstack/react-query";
+import { signupCompleteKakao } from "@/src/shared/api/auth";
+import { KakaoSignupRequest } from "@/src/shared/types/auth";
 
 const AdditionalInfoForm = () => {
   const router = useRouter();
-  const { register, control, handleSubmit, formState: { errors } } = useHandleAdditionalInfo();
+  const { register, control, handleSubmit, formState: { errors }, getValues } = useHandleAdditionalInfo();
+
+  const { mutate } = useMutation({
+    mutationFn: (infoForm: InfoForm) => {
+      const request: KakaoSignupRequest = {
+        email: 'alstnwkd990@kakao.com',
+        name: infoForm.name,
+        phoneNumber: infoForm.phone,
+        isMarketingAgreed: infoForm.marketingAgreed,
+        isPrivacyPolicyAgreed: infoForm.privacyAgreed,
+        isTermsAgreed: infoForm.termsAgreed,
+        height: Number(infoForm.height),
+        weight: Number(infoForm.weight),
+        bodyTypeId: infoForm.bodyType === 'unknown' ? 4 : infoForm.bodyType === 'straight' ? 1 : infoForm.bodyType === 'wave' ? 2 : 3,
+        gender: infoForm.gender,
+      };
+      return signupCompleteKakao(request);
+    },
+    onSuccess: () => {
+      router.push("/signup/success");
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
 
   const onSubmit = () => {
-    // Success - redirect to success page
-    router.push("/signup/success");
+    mutate(getValues())
   };
 
   return (
@@ -48,7 +74,7 @@ const AdditionalInfoForm = () => {
         <Gender control={control} errors={errors} />
         <BodyType control={control} errors={errors} />
         <Agreement control={control} errors={errors} />
-        <SubmitButton type="submit">가입하기</SubmitButton>
+        <SubmitButton type="submit" onClick={onSubmit}>가입하기</SubmitButton>
       </Form>
     </FormContainer>
   );
