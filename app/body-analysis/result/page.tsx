@@ -2,7 +2,6 @@
 
 import styled from "@emotion/styled";
 import AuthGuard from "@/src/shared/components/auth-guard";
-import { getResultInfo } from "@/src/shared/api/getBodyResultInfo";
 import BodyResultCard from "@/src/widgets/body-analysis/BodyResultCard";
 import ResultHeader from "@/src/widgets/body-analysis/ResultHeader";
 
@@ -12,14 +11,12 @@ export default function BodyAnalysisResultPage() {
     analysisDate: "2025년 6월 10일",
   };
 
-  const resultInfo = getResultInfo(bodyAnalysisResult.type);
-
   return (
     <AuthGuard requireAuth={true} message="체형분석 결과를 보려면 로그인이 필요합니다.">
       <Container>
         <MaxWidthContainer>
           <ResultHeader />
-          <BodyResultCard resultInfo={resultInfo} analysisDate={bodyAnalysisResult.analysisDate} />
+          <BodyResultCard analysisDate={bodyAnalysisResult.analysisDate} />
         </MaxWidthContainer>
       </Container>
     </AuthGuard>
