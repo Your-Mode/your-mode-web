@@ -135,9 +135,9 @@ export default function Footer() {
         <FooterMain>
           <CompanyInfo>
             <CompanyName>(주)유어모드</CompanyName>
-            <InfoText>사업자등록번호: 1321-21321-213 | 대표: 복복복</InfoText>
-            <InfoText>주소지주소지주소지주소지주소지</InfoText>
-            <InfoText>고객센터: 010-1234-5678 | 이메일: yourmode@naver.com</InfoText>
+            <InfoText>사업자등록번호: 340-08-03240 | 대표: 전여진</InfoText>
+            <InfoText>경기 고양시 일산동구 고봉로 32-19 남정씨티프라자7차 303~305호 내부 3호실</InfoText>
+            <InfoText>고객센터: 010-6415-1548 | 이메일: urmode@naver.com</InfoText>
           </CompanyInfo>
 
           <SocialSection>
