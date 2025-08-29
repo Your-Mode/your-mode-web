@@ -11,10 +11,10 @@ import CommentContent from "@/src/widgets/mypage/ui/CommentContent";
 import RecentContent from "@/src/widgets/mypage/ui/RecentContent";
 import BodyAnalysis from "@/src/widgets/mypage/ui/BodyAnalysis";
 import ThankYouModal from "@/src/widgets/mypage/ui/ThankYouModal";
-import { useGetMyProfile } from "@/src/widgets/mypage/feature/useGetMyProfile";
 import Error from "@/app/error";
 import { useAuthStore } from "@/src/shared/store/auth";
 import { ProfileHeader } from "@/src/widgets/mypage";
+import { useGetMyPageInfo } from "@/src/widgets/mypage/feature/useGetMyPageInfo";
 
 const userProfile = {
   name: "김정윤",
@@ -30,23 +30,23 @@ const userProfile = {
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState("my-content");
   const [thankYouModalOpen, setThankYouModalOpen] = useState(false);
-  const { data, isLoading, isError } = useGetMyProfile();
+  const { userQuery, contentApplicationListQuery } = useGetMyPageInfo();
   const email = useAuthStore().user?.email;
-  if (isError) {
+  if (userQuery.isError || contentApplicationListQuery.isError) {
     return <Error />;
   }
 
-  if (data !== undefined && isLoading) {
+  if ((userQuery.data !== undefined && userQuery.isLoading) || (contentApplicationListQuery.data !== undefined && contentApplicationListQuery.isLoading)) {
     return <div>Loading...</div>;
   }
 
-  const bodyTypeName = data?.bodyTypeId === 1 ? "스트레이트" : data?.bodyTypeId === 2 ? "웨이브" : data?.bodyTypeId === 3 ? "내추럴" : "";
+  const bodyTypeName = userQuery.data?.bodyTypeId === 1 ? "스트레이트" : userQuery.data?.bodyTypeId === 2 ? "웨이브" : userQuery.data?.bodyTypeId === 3 ? "내추럴" : "체형 진단하러 가기";
 
   return (
     <MainContainer>
       <MainContent>
         <ProfileHeader
-          name={data?.name}
+          name={userQuery.data?.name}
           bodyType={bodyTypeName}
           email={email}
           stats={userProfile.stats}
@@ -54,7 +54,7 @@ export default function MyPage() {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <ContentTabs activeTab={activeTab} onTabChange={setActiveTab}>
             <MyOwnContent />
-            <ProgressContent setThankYouModalOpen={setThankYouModalOpen} />
+            <ProgressContent setThankYouModalOpen={setThankYouModalOpen} data={contentApplicationListQuery?.data} />
             <FavoritesContent />
             <CommentContent />
             <RecentContent />
