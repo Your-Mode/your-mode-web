@@ -1,14 +1,8 @@
 import styled from "@emotion/styled";
 import { CheckCircle, Palette, User } from "lucide-react";
-import { useEffect, useState } from "react";
 import { keyframes } from "@emotion/react";
 
 const SuccessHeader = () => {
-  const [applicationNumber, setApplicationNumber] = useState<string | null>(null);
-
-  useEffect(() => {
-    setApplicationNumber(`CA${Date.now().toString().slice(-6)}`);
-  }, []);
 
   return (
     <>
@@ -28,8 +22,6 @@ const SuccessHeader = () => {
         <br />
         전문 에디터가 맞춤형 스타일링을 준비하고 있어요.
       </Subtitle>
-
-      <ApplicationNumber>📋 신청번호: {applicationNumber}</ApplicationNumber>
     </>
   );
 };
@@ -107,13 +99,4 @@ const Subtitle = styled.p`
   @media (max-width: 640px) {
     font-size: 1rem;
   }
-`;
-
-const ApplicationNumber = styled.div`
-  background: linear-gradient(135deg, #ff3e6c, #ff8e8e);
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  font-weight: 600;
 `;
