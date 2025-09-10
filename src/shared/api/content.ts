@@ -64,7 +64,7 @@ export interface ContentRequestDetailResponse {
     height: number;
     weight: number;
     bodyTypeName: string;
-  }
+  };
   statusHistories: StatusHistory[];
   itemCategoryIds: number[];
   itemCategoryNames: string[];
@@ -78,4 +78,75 @@ export const getContentRequestDetail = async (id: number) => {
   } catch ( error ) {
     console.error(error);
   }
+};
+
+interface MyContentListResponse {
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+  size: number;
+  content: Article[];
+  number: number;
+  sort: SortInfo;
+  numberOfElements: number;
+  pageable: Pageable;
+  empty: boolean;
+}
+
+interface Article {
+  id: number;
+  title: string;
+  mainImgUrl: string;
+  publishAt: string;   // ISO date string
+  createdAt: string;   // ISO date string
+  editedAt: string;    // ISO date string
+  categories: Category[];
+  bodyTypes: BodyType[];
+  likeCount: number;
+  commentCount: number;
+  viewCount: number;
+  recommended: boolean;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
+
+interface BodyType {
+  id: number;
+  name: string;
+}
+
+interface SortInfo {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+}
+
+interface Pageable {
+  offset: number;
+  sort: SortInfo;
+  pageSize: number;
+  paged: boolean;
+  pageNumber: number;
+  unpaged: boolean;
+}
+
+interface PageableQuery {
+  page: number;
+  size: number;
+  sort: string[];
+}
+
+export const getMyContentList = async (pageableQuery: PageableQuery) => {
+  const response = await axiosInstance.get<MyContentListResponse>('/contents/my', {
+    params: {
+      page: pageableQuery.page,
+      size: pageableQuery.size,
+      sort: pageableQuery.sort.join(','),
+    }
+  });
+  return response.data;
 };
