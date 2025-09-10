@@ -48,3 +48,25 @@ export const updatePassword = async (request: UpdatePasswordRequest) => {
     }
   }
 };
+
+export interface MyPageComponentResponse {
+  email: string;
+  bodyTypeId: number;
+  customContentsCount: number;
+  viewedContentsCount: number;
+  likedContentsCount: number;
+  commentedContentsCount: number;
+  myCommentsCount: number;
+}
+
+export const getMyPageComponent = async () => {
+  try {
+    const response = await axiosInstance.get<BaseResponse<MyPageComponentResponse>>('/users/mypage/component');
+    return response.data;
+  } catch ( error ) {
+    console.error(error);
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+}

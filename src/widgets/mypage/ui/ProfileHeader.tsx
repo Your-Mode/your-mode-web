@@ -10,9 +10,9 @@ interface ProfileHeaderProps {
   bodyType?: string;
   email?: string;
   stats: {
-    customContents: number
-    favorites: number
-    comments: number
+    customContentsCount: number | undefined ;
+    likedContentsCount: number | undefined;
+    myCommentsCount: number | undefined;
   };
 }
 
@@ -49,15 +49,15 @@ const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => 
 
           <UserStats>
             <StatItem>
-              <div className="value">{stats.customContents}</div>
+              <div className="value">{stats.customContentsCount}</div>
               <div className="label">맞춤 컨텐츠</div>
             </StatItem>
             <StatItem>
-              <div className="value">{stats.favorites}</div>
+              <div className="value">{stats.likedContentsCount}</div>
               <div className="label">찜한 컨텐츠</div>
             </StatItem>
             <StatItem>
-              <div className="value">{stats.comments}</div>
+              <div className="value">{stats.myCommentsCount}</div>
               <div className="label">댓글</div>
             </StatItem>
           </UserStats>

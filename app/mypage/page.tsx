@@ -16,31 +16,26 @@ import { useAuthStore } from "@/src/shared/store/auth";
 import { ProfileHeader } from "@/src/widgets/mypage";
 import { useGetMyPageInfo } from "@/src/widgets/mypage/feature/useGetMyPageInfo";
 
-const userProfile = {
-  name: "김정윤",
-  bodyType: "웨이브",
-  email: "yourmode@naver.com",
-  stats: {
-    customContents: 3,
-    favorites: 5,
-    comments: 2,
-  },
-};
-
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState("my-content");
   const [thankYouModalOpen, setThankYouModalOpen] = useState(false);
-  const { userQuery, contentApplicationListQuery } = useGetMyPageInfo();
+  const { userQuery, contentApplicationListQuery, userComponentQuery } = useGetMyPageInfo();
   const email = useAuthStore().user?.email;
-  if (userQuery.isError || contentApplicationListQuery.isError) {
+  if (userQuery.isError || contentApplicationListQuery.isError || userComponentQuery.isError) {
     return <Error />;
   }
 
-  if ((userQuery.data !== undefined && userQuery.isLoading) || (contentApplicationListQuery.data !== undefined && contentApplicationListQuery.isLoading)) {
+  if ((userQuery.data !== undefined && userQuery.isLoading) || (contentApplicationListQuery.data !== undefined && contentApplicationListQuery.isLoading) || (userComponentQuery.data !== undefined && userComponentQuery.isLoading)) {
     return <div>Loading...</div>;
   }
 
   const bodyTypeName = userQuery.data?.bodyTypeId === 1 ? "스트레이트" : userQuery.data?.bodyTypeId === 2 ? "웨이브" : userQuery.data?.bodyTypeId === 3 ? "내추럴" : "체형 진단하러 가기";
+
+  const stats = {
+    customContentsCount: userComponentQuery.data?.customContentsCount,
+    likedContentsCount: userComponentQuery.data?.likedContentsCount,
+    myCommentsCount: userComponentQuery.data?.myCommentsCount,
+  }
 
   return (
     <MainContainer>
@@ -49,7 +44,7 @@ export default function MyPage() {
           name={userQuery.data?.name}
           bodyType={bodyTypeName}
           email={email}
-          stats={userProfile.stats}
+          stats={stats}
         />
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <ContentTabs activeTab={activeTab} onTabChange={setActiveTab}>
