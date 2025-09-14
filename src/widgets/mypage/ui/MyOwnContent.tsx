@@ -5,15 +5,7 @@ import EmptyState from "@/src/widgets/mypage/ui/EmptyState";
 import { FileText } from "lucide-react";
 import { useGetMyContentList } from "@/src/widgets/mypage/feature/useGetMyContentList";
 import { useEffect, useMemo, useRef } from "react";
-
-const formatDate = (iso?: string) => {
-  if (!iso) return "";
-  const d = new Date(iso);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}년 ${m}월 ${day}일`;
-};
+import { formatDate } from "@/src/shared/utils/formatDate";
 
 const MyOwnContent = () => {
   const {
@@ -110,7 +102,6 @@ const MyOwnContent = () => {
           />
         ))}
       </ContentGrid>
-
       {/* 더보기 버튼(접근성/대체) */}
       {hasNextPage && (
         <button
@@ -130,6 +121,7 @@ const MyOwnContent = () => {
 
       {/* 자동 로드를 위한 센티넬 */}
       <div ref={sentinelRef} style={{ height: 1 }} />
+
     </TabsContent>
   );
 };

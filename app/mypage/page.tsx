@@ -35,7 +35,7 @@ export default function MyPage() {
     customContentsCount: userComponentQuery.data?.customContentsCount,
     likedContentsCount: userComponentQuery.data?.likedContentsCount,
     myCommentsCount: userComponentQuery.data?.myCommentsCount,
-  }
+  };
 
   return (
     <MainContainer>
@@ -48,12 +48,13 @@ export default function MyPage() {
         />
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <ContentTabs activeTab={activeTab} onTabChange={setActiveTab}>
-            <MyOwnContent />
-            <ProgressContent setThankYouModalOpen={setThankYouModalOpen} data={contentApplicationListQuery?.data} />
-            <FavoritesContent />
-            <CommentContent />
-            <RecentContent />
-            <BodyAnalysis />
+            {activeTab === "my-content" && <MyOwnContent />}
+            {activeTab === "progress" &&
+              <ProgressContent setThankYouModalOpen={setThankYouModalOpen} data={contentApplicationListQuery?.data} />}
+            {activeTab === "favorites" && <FavoritesContent />}
+            {activeTab === "comments" && <CommentContent />}
+            {/*{<RecentContent />}*/}
+            {activeTab === "body-analysis" && <BodyAnalysis />}
           </ContentTabs>
         </Tabs>
         <ThankYouModal thankYouModalOpen={thankYouModalOpen} setThankYouModalOpen={setThankYouModalOpen} />

@@ -140,8 +140,9 @@ interface PageableQuery {
   sort: string[];
 }
 
-export const getMyContentList = async (pageableQuery: PageableQuery) => {
-  const response = await axiosInstance.get<MyContentListResponse>('/contents/my', {
+export const getMyContentList = async (pageableQuery: PageableQuery, url?: string) => {
+  const newUrl = url ? '/contents/my' + url : '/contents/my';
+  const response = await axiosInstance.get<MyContentListResponse>(newUrl, {
     params: {
       page: pageableQuery.page,
       size: pageableQuery.size,

@@ -27,9 +27,9 @@ export default function ContentTabs({ activeTab, onTabChange, children }: Conten
         <TabsTrigger value="comments" className="tabs-trigger">
           댓글 단 컨텐츠
         </TabsTrigger>
-        <TabsTrigger value="recent" className="tabs-trigger">
+        {/*<TabsTrigger value="recent" className="tabs-trigger">
           최근 본 컨텐츠
-        </TabsTrigger>
+        </TabsTrigger>*/}
         <TabsTrigger value="body-analysis" className="tabs-trigger">
           체형분석 결과
         </TabsTrigger>
