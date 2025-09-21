@@ -5,6 +5,7 @@ import styled from "@emotion/styled"
 import IcThreads from "@/src/shared/assets/ic/ic-threads.svg"
 import ImgNaverBlog from "@/src/shared/assets/img/img-naver-blog.png"
 import Image from "next/image";
+import ImgInsta from "@/src/shared/assets/img/img-insta.png"
 
 const FooterContainer = styled.footer`
   background-color: ${({ theme }) => theme.colors.background.tertiary};
@@ -76,10 +77,6 @@ const SocialIcon = styled.button`
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[500]};
-  }
 `
 
 const QuickLinksSection = styled.div`
@@ -131,6 +128,10 @@ const LegalLink = styled(Link)`
 `
 
 export default function Footer() {
+  const openSNS = (url: string) => {
+    window.open(url, '_blank');
+  }
+
   return (
     <FooterContainer>
       <FooterContent>
@@ -144,11 +145,13 @@ export default function Footer() {
 
           <SocialSection>
             <SocialIcons>
-              <SocialIcon aria-label="카카오톡" />
-              <SocialIcon aria-label="네이버">
+              <SocialIcon aria-label="네이버" onClick={() => openSNS('https://blog.naver.com/yourmode-')} >
                 <Image src={ImgNaverBlog} alt="" width={36} height={36} />
               </SocialIcon>
-              <SocialIcon aria-label="스레드">
+              <SocialIcon aria-label="인스타" onClick={() => openSNS('https://www.instagram.com/your_mode_official/')}>
+                <Image src={ImgInsta} alt="" width={36} height={36} />
+              </SocialIcon>
+              <SocialIcon aria-label="스레드" onClick={() => openSNS('https://www.threads.com/@your_mode_official')}>
                 <Image src={IcThreads} alt="" width={36} height={36} />
               </SocialIcon>
             </SocialIcons>
