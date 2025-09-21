@@ -6,7 +6,8 @@ import { Input } from "@/src/shared/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { ChatResponse } from "@/src/shared/types/body-type";
 import { useChat } from "@/src/widgets/body-analysis/feature/mutation/useChat";
-import { CardContent, CardHeader, CardTitle } from "@/src/shared/components/ui/card";
+import { CardContent } from "@/src/shared/components/ui/card";
+import { usePostBodyAnalysis } from "@/src/widgets/auth/feature/mutation/usePostBodyAnalysis";
 
 export const surveyQuestions = [
   {
@@ -221,10 +222,29 @@ export const surveyQuestions = [
   },
 ];
 
+const testData = [
+    "두께감이 있고 육감적이다",
+    "피부가 탄탄하고 쫀득한 편이다",
+    "근육이 붙기 쉽다",
+    "목이 약간 짧은 편이다",
+    "허리가 짧고 직선적인 느낌이며 굴곡이 적다",
+    "두께감이 있고, 바스트 탑의 위치가 높다",
+    "어깨가 넓고 직선적인 느낌이며, 탄탄한 인상을 준다",
+    "엉덩이 라인의 위쪽부터 볼륨감이 있으며 탄력있다",
+    "허벅지가 단단하고 근육이 많아 탄력이 있다",
+    "손이 작고 손바닥에 두께감이 있다",
+    "손목이 가늘고 둥근 편이다",
+    "발이 작고 발목이 가늘며 단단하다",
+    "무릎이 작고 부각되지 않는 편이다",
+    "쇄골이 거의 보이지 않는다",
+    "둥근 얼굴이며, 볼이 통통한 편이다",
+    "상체가 발달한 느낌이며 허리가 짧고 탄탄한 인상을 준다",
+    "팔, 가슴, 배 등 상체 위주로 찐다"
+  ];
+
 
 const Survey = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  /*const { gender, height, weight } = useApplyUserInfoStore();*/
   const [answers, setAnswers] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -232,12 +252,12 @@ const Survey = () => {
   const [lastResponseStatus, setLastResponseStatus] = useState<"success" | "failed" | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  /*const { mutate: postResult } = usePostResult();*/
+  const { mutate, isPending, isError: isMutateError } = usePostBodyAnalysis();
 
   // useChat 훅 사용
   const initialMessage = `안녕하세요! 당신만의 완벽한 스타일을 찾아드릴게요 ✨
 
-총 17개의 질문을 통해 당신의 골격 타입을 정확히 분석해드릴게요.
+총 15개의 질문을 통해 당신의 골격 타입을 정확히 분석해드릴게요.
 
 옵션을 선택하거나 자유롭게 대화하듯 답변해주세요.
 
@@ -327,33 +347,13 @@ ${questionText}
 
 자유롭게 답변해주세요!`);
         setIsProcessing(false);
-      }, 1500);
+      }, 100);
     } else {
       // 설문 완료
-      try {
-        const authToken = localStorage.getItem("aFfuthToken");
-        if (authToken) {
-          const token = JSON.parse(authToken);
-          /*await saveSurveyAnswers(token.userId, token.phone, newAnswers);*/
-        }
-      } catch ( error ) {
-        console.error("설문 답변 저장 오류:", error);
-      }
-
-      localStorage.setItem("surveyAnswers", JSON.stringify(newAnswers));
-
       addBotMessage(
         "모든 질문이 완료되었어요! 🎉\n\n지금 당신만의 완벽한 스타일을 분석하고 있어요. 조금만 기다려주세요... ✨\n\n📊 답변이 안전하게 저장되었습니다!",
       );
-
-      /*const requestData: BodyResultRequest = {
-        answers: newAnswers,
-        gender: gender,
-        height: height,
-        weight: weight,
-      };
-
-      postResult(requestData);*/
+      mutate(answers);
     }
   };
 
@@ -456,9 +456,11 @@ ${questionText}
           </Hint>
         </SurveyCardContent>
       </ChatCard>
+      <button onClick={() => mutate(testData)}>테스트</button>
+      {isMutateError && <button onClick={() => mutate(answers)}>다시 결과 신청하기</button>}
     </Container>
   );
-}
+};
 
 export default Survey;
 
@@ -541,9 +543,8 @@ const NoticeText = styled.p`
 const ChatCard = styled.div`
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(4px);
-  box-shadow:
-    0 20px 25px -5px rgba(0,0,0,0.1),
-    0 10px 10px -5px rgba(0,0,0,0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   height: 70vh;
@@ -561,6 +562,7 @@ const Messages = styled.div`
   gap: .75rem;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE, Edge */
+
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
 `;
@@ -583,7 +585,7 @@ const Bubble = styled.div<{ variant: "bot" | "system" | "user" }>`
   }
 
   ${({ variant }) =>
-  variant === "bot" ? `
+    variant === "bot" ? `
       background-image: linear-gradient(to right, #fdf2f8, #faf5ff);
       border: 1px solid #fbcfe8;
     ` : variant === "system" ? `
@@ -594,7 +596,7 @@ const Bubble = styled.div<{ variant: "bot" | "system" | "user" }>`
       background: #ffe4e6;
       border: 1px solid #fecdd3;
     `
-}
+  }
 `;
 
 const Timestamp = styled.span`
@@ -621,7 +623,9 @@ const Hint = styled.p`
 
 // 아이콘 스피너 대체
 const spin = keyframes`
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 `;
 const Spin = styled.span`
   display: inline-flex;

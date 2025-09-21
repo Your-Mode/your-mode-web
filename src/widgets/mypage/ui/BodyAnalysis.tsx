@@ -5,8 +5,48 @@ import Link from "next/link";
 import { Button } from "@/src/shared/components/ui/button";
 import { TabsContent } from "@/src/shared/components/ui/tabs";
 import styled from "@emotion/styled";
+import { useGetSurveysResultList } from "@/src/widgets/mypage/feature/useGetSurveysResultList";
+import Loading from "@/app/mypage/loading";
+import Error from "@/app/error";
+import { MySurveyResult } from "@/src/shared/api/survey";
+import { formatDate } from "@/src/shared/utils/formatDate";
+
+const MOCK_LATEST_DATA: MySurveyResult = {
+  resultId: 1,
+  bodyTypeName: "스트레이트",
+  historyId: 101,
+  createdAt: "2024-10-01T10:00:00Z",
+};
 
 const BodyAnalysis = () => {
+  const { data, isError, isLoading } = useGetSurveysResultList();
+
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
+  if (!data || data.result?.length === 0) {
+    return (
+      <TabsContent value="body-analysis">
+        <div style={{ display: "flex", justifyContent: "center", padding: "2rem 0" }}>
+          <BodyAnalysisCard style={{ maxWidth: "400px", width: "100%" }}>
+            <CardContent style={{ padding: "2rem", textAlign: "center" }}>
+              <BodyTypeTitle>체형 진단 기록이 없습니다</BodyTypeTitle>
+              <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.5rem" }}>
+                <Link href="/body-analysis" style={{ flex: 1 }}>
+                  <Button variant="outline" style={{ width: "100%" }}>
+                    <Sparkles size={16} style={{ marginRight: "0.5rem" }} />
+                    체형 진단하러 가기
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </BodyAnalysisCard>
+        </div>
+      </TabsContent>
+    );
+  }
+
+  const latestResult = data.result ? data.result[0] : MOCK_LATEST_DATA;
+
   return (
     <TabsContent value="body-analysis">
       <div style={{ display: "flex", justifyContent: "center", padding: "2rem 0" }}>
@@ -16,17 +56,17 @@ const BodyAnalysis = () => {
               <Target size={32} color="white" />
             </BodyTypeIcon>
 
-            <BodyTypeTitle>{bodyAnalysisResult.title}</BodyTypeTitle>
+            <BodyTypeTitle>{latestResult.bodyTypeName} 타입</BodyTypeTitle>
 
             <AnalysisDate>
               <Calendar size={14} />
-              분석일: {bodyAnalysisResult.analysisDate}
+              분석일: {formatDate(latestResult.createdAt)}
             </AnalysisDate>
 
-            <BodyTypeDescription>{bodyAnalysisResult.description}</BodyTypeDescription>
+            {/*<BodyTypeDescription>{bodyAnalysisResult.description}</BodyTypeDescription>*/}
 
             <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
-              <Link href="/body-analysis/result" style={{ flex: 1 }}>
+              <Link href={`/body-analysis/my/${latestResult.resultId}`} style={{ flex: 1 }}>
                 <ViewResultButton>
                   <Eye size={16} style={{ marginRight: "0.5rem" }} />
                   상세 결과 보기

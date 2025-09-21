@@ -10,6 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import InnerHeader from "@/src/shared/components/InnerHeader";
+import { useUpdatePassword } from "@/src/widgets/mypage/feature/useUpdatePassword";
 
 const MainContainer = styled.div`
   min-height: 100vh;
@@ -135,6 +136,7 @@ const CancelButton = styled(Button)`
 `;
 
 export default function PasswordChangePage() {
+  const { mutate, isError } = useUpdatePassword();
   const router = useRouter();
 
   const [passwordData, setPasswordData] = useState({
@@ -183,7 +185,7 @@ export default function PasswordChangePage() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      mutate(passwordData.newPassword)
       setSuccessMessage("비밀번호가 성공적으로 변경되었습니다!");
       setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -193,6 +195,10 @@ export default function PasswordChangePage() {
       setIsLoading(false);
     }
   };
+
+  if (isError) {
+    setErrors({ general: "비밀번호 변경 중 오류가 발생했습니다." });
+  }
 
   const handleCancel = () => {
     router.back();

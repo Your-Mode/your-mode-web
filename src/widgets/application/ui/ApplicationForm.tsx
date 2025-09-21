@@ -7,37 +7,52 @@ import { Textarea } from "@/src/shared/components/ui/textarea";
 import { Button } from "@/src/shared/components/ui/button";
 import { Checkbox } from "@/src/shared/components/ui/checkbox";
 import ApplicationFormGroup from "./ApplicationFormGroup";
-import { useRouter } from "next/navigation";
 import {
   FormValues,
   useContentApplicationForm,
 } from "@/src/widgets/application/feature/hooks/useContentApplicationForm";
+import { useGetMyProfile } from "@/src/widgets/mypage/feature/useGetMyProfile";
+import { usePostContentApplication } from "@/src/widgets/application/feature/hooks/usePostContentApplication";
+import { ContentCreateRequest } from "@/src/shared/api/content";
 
 const itemOptions = ["아우터", "상의", "하의", "가방", "신발", "악세서리", "기타"];
 
 export default function ApplicationForm() {
-  const router = useRouter();
-  const { register, handleSubmit, formState: { errors, isSubmitting }, control } = useContentApplicationForm();
+  const { data } = useGetMyProfile();
+  const { register, handleSubmit, formState: { errors, isSubmitting }, control, getValues } = useContentApplicationForm();
+  const { mutate } = usePostContentApplication()
 
   const onSubmit = (data: FormValues) => {
-    // 실제 제출 로직 (ex. API 연동)
-    console.log("신청 데이터:", data);
-    router.push("/content-application/success");
+    const mappedItems: number[] = data.recommendedItems
+      .map(item => itemOptions.indexOf(item) + 1)
+      .filter(index => index > 0); // 못 찾은 건 index = 0이 되므로 제거
+
+    const requestData: ContentCreateRequest = {
+      bodyFeature: data.bodyFeatures,
+      situation: data.situation,
+      recommendedStyle: data.preferredStyle,
+      avoidedStyle: data.avoidStyle,
+      budget: parseInt(data.budget),
+      isPublic: data.uploadConsent,
+      itemCategoryIds: mappedItems,
+    };
+    mutate(requestData);
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <ApplicationFormGroup label="이름" htmlFor="name" error={errors.name?.message}>
-        <StyledInput id="name" readOnly style={{ background: "#f5f5f5" }} {...register("name")} />
+      <ApplicationFormGroup label="이름" htmlFor="name">
+        <StyledInput id="name" readOnly style={{ background: "#f5f5f5" }} value={data?.name} />
       </ApplicationFormGroup>
-      <ApplicationFormGroup label="체형" htmlFor="bodyType" error={errors.bodyType?.message}>
-        <StyledInput id="bodyType" readOnly style={{ background: "#f5f5f5" }} {...register("bodyType")} />
+      <ApplicationFormGroup label="체형" htmlFor="bodyType">
+        <StyledInput id="bodyType" readOnly style={{ background: "#f5f5f5" }}
+                     value={data?.bodyTypeId === 1 ? "스트레이트" : data?.bodyTypeId === 2 ? "웨이브" : data?.bodyTypeId === 3 ? "내추럴" : "체형 타입 정보가 존재하지 않습니다"} />
       </ApplicationFormGroup>
-      <ApplicationFormGroup label="키" htmlFor="height" error={errors.height?.message}>
-        <StyledInput id="height" type="number" placeholder="cm 단위" {...register("height")} />
+      <ApplicationFormGroup label="키" htmlFor="height">
+        <StyledInput id="height" readOnly style={{ background: "#f5f5f5" }} value={data?.height} />
       </ApplicationFormGroup>
-      <ApplicationFormGroup label="몸무게" htmlFor="weight" error={errors.weight?.message}>
-        <StyledInput id="weight" type="number" placeholder="kg 단위" {...register("weight")} />
+      <ApplicationFormGroup label="몸무게" htmlFor="weight">
+        <StyledInput id="weight" readOnly style={{ background: "#f5f5f5" }} value={data?.weight} />
       </ApplicationFormGroup>
       <ApplicationFormGroup
         label="체형적 특징"
@@ -53,7 +68,7 @@ export default function ApplicationForm() {
       </ApplicationFormGroup>
       <ApplicationFormGroup label="추천 받고 싶은 아이템" error={errors.recommendedItems?.message}>
         <CheckboxGrid>
-          {itemOptions.map((item) => (
+          {itemOptions.map((item, idx) => (
             <Controller
               key={item}
               control={control}
@@ -119,7 +134,7 @@ export default function ApplicationForm() {
       >
         <StyledInput
           id="budget"
-          placeholder="예: 30만원 이내, 50만원 정도"
+          placeholder="예: 15(만원 단위)"
           {...register("budget")}
         />
       </ApplicationFormGroup>

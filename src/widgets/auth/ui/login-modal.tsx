@@ -5,9 +5,9 @@ import { X } from "lucide-react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/src/shared/store/auth";
-import SignupMethodModal from "./signup-method-modal";
 import { usePostLogin } from "@/src/widgets/auth/feature/mutation/usePostLogin";
+import { useMutation } from "@tanstack/react-query";
+import { kakaoLogin } from "@/src/shared/api/auth";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -18,9 +18,32 @@ interface LoginModalProps {
 export default function LoginModal({ isOpen, onClose, message }: LoginModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showSignupMethod, setShowSignupMethod] = useState(false);
   const router = useRouter();
   const { mutate, isPending, isSuccess } = usePostLogin();
+  const { mutate: loginKakao } = useMutation({
+    mutationFn: () => kakaoLogin(),
+    onSuccess: (data) => {
+      if (data?.result) {
+        window.location.href = data.result;
+      }
+    },
+    onError: (error) => {
+      console.error("Kakao Login Error:", error);
+    },
+  });
+
+  const handleEmailSignup = () => {
+    onClose();
+    router.push("/signup");
+  };
+
+  const handleSocialSignup = (provider: "kakao" | "naver") => {
+    loginKakao()
+    onClose();
+
+    // 소셜 로그인 성공 후 추가 정보 입력 페이지로 이동
+    /*router.push("/signup/additional-info");*/
+  };
 
   const handleLogin = () => {
     mutate({ email, password });
@@ -32,14 +55,6 @@ export default function LoginModal({ isOpen, onClose, message }: LoginModalProps
     onClose();
   }
 
-  const handleSignupClick = () => {
-    setShowSignupMethod(true);
-  };
-
-  const handleSignupMethodClose = () => {
-    setShowSignupMethod(false);
-  };
-
   useEffect(() => {
     if (isSuccess) {
       closeModal();
@@ -49,7 +64,7 @@ export default function LoginModal({ isOpen, onClose, message }: LoginModalProps
 
   return (
     <>
-      <ModalOverlay isOpen={isOpen && !showSignupMethod} onClick={closeModal}>
+      <ModalOverlay isOpen={isOpen} onClick={closeModal}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
           <ModalHeader>
             <ModalTitle>유어모드 로그인</ModalTitle>
@@ -90,25 +105,23 @@ export default function LoginModal({ isOpen, onClose, message }: LoginModalProps
                 비밀번호 찾기
               </TextLink>
               <Divider>|</Divider>
-              <TextLink onClick={handleSignupClick}>회원가입</TextLink>
+              <TextLink onClick={handleEmailSignup}>회원가입</TextLink>
             </LinkGroup>
 
-            <SocialLoginSection>
+            {/*<SocialLoginSection>
               <SocialLoginTitle>간편 로그인</SocialLoginTitle>
               <SocialButtonsContainer>
-                <SocialButton>
+                <SocialButton onClick={() => handleSocialSignup("kakao")}>
                   <span>K</span>
                 </SocialButton>
                 <SocialButton>
                   <span>N</span>
                 </SocialButton>
               </SocialButtonsContainer>
-            </SocialLoginSection>
+            </SocialLoginSection>*/}
           </ModalBody>
         </ModalContent>
       </ModalOverlay>
-
-      <SignupMethodModal isOpen={showSignupMethod} onClose={handleSignupMethodClose} />
     </>
   );
 }

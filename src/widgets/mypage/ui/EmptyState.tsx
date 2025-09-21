@@ -13,9 +13,10 @@ interface EmptyStateProps {
   description: string;
   actionLink?: string;
   actionText?: string;
+  actionOnClick?: () => void;
 }
 
-export default function EmptyState({ icon, title, description, actionLink, actionText }: EmptyStateProps) {
+export default function EmptyState({ icon, title, description, actionLink, actionText, actionOnClick }: EmptyStateProps) {
   return (
     <EmptyContainer>
       <EmptyIcon>{icon}</EmptyIcon>
@@ -23,7 +24,7 @@ export default function EmptyState({ icon, title, description, actionLink, actio
       <EmptyDescription>{description}</EmptyDescription>
       {actionLink && actionText && (
         <Link href={actionLink}>
-          <Button>
+          <Button onClick={actionOnClick}>
             {actionText}
             <ArrowRight size={16} style={{ marginLeft: "0.5rem" }} />
           </Button>
@@ -34,6 +35,9 @@ export default function EmptyState({ icon, title, description, actionLink, actio
 }
 
 const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   padding: 4rem 2rem;
   color: ${({ theme }) => theme.colors.text.secondary};

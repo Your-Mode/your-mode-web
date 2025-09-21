@@ -3,13 +3,9 @@ import {
   ArrowRight,
   Calendar,
   CheckCircle,
-  ChevronDown,
-  ChevronUp,
   Clock,
   FileCheck, FileText,
-  MessageSquare,
-  Search, Star,
-  Tag,
+  Search,
   User,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/shared/components/ui/tabs";
@@ -17,29 +13,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src
 import { Progress } from "@/src/shared/components/ui/progress";
 import { Button } from "@/src/shared/components/ui/button";
 import Link from "next/link";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription, DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/src/shared/components/ui/dialog";
-import { Label } from "@/src/shared/components/ui/label";
-import { Textarea } from "@/src/shared/components/ui/textarea";
 import EmptyState from "./EmptyState";
-import { ContentStatus } from "@/src/shared/types/content";
 import { myCustomContents } from "@/src/shared/api/mock";
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { Input } from "@/src/shared/components/ui/input";
 import { Badge } from "@/src/shared/components/ui/badge";
+import { ContentRequestItem } from "@/src/shared/api/content";
 
 interface ProgressContentProps {
+  data: ContentRequestItem[] | undefined;
   setThankYouModalOpen: (open: boolean) => void;
 }
 
-const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
+const ProgressContent = ({ setThankYouModalOpen, data }: ProgressContentProps) => {
   const [activeCustomTab, setActiveCustomTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
@@ -47,39 +34,40 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [expandedTimelines, setExpandedTimelines] = useState<Set<string>>(new Set());
+  console.log("data", data);
 
-  const getStatusText = (status: ContentStatus) => {
+  const getStatusText = (status: string) => {
     switch (status) {
-      case "pending":
+      case "신청 접수":
         return "접수 완료";
-      case "assigned":
+      case "에디터 배정":
         return "에디터 배정";
-      case "in-progress":
+      case "스타일링 제작":
         return "제작 중";
-      case "review":
+      case "검토 및 수정":
         return "검토 중";
-      case "completed":
+      case "최종 완성":
         return "완료";
-      case "cancelled":
+      case "취소됨":
         return "취소됨";
       default:
         return "접수 완료";
     }
   };
 
-  const getStatusIcon = (status: ContentStatus) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
-      case "pending":
+      case "신청 접수":
         return <Clock size={14} />;
-      case "assigned":
+      case "에디터 배정":
         return <User size={14} />;
-      case "in-progress":
+      case "스타일링 제작":
         return <FileText size={14} />;
-      case "review":
+      case "검토 및 수정":
         return <AlertCircle size={14} />;
-      case "completed":
+      case "최종 완성":
         return <CheckCircle size={14} />;
-      case "cancelled":
+      case "취소됨":
         return <AlertCircle size={14} />;
       default:
         return <Clock size={14} />;
@@ -123,6 +111,13 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
     "in-progress": myCustomContents.filter((c) => c.status === "in-progress" || c.status === "assigned").length,
     completed: myCustomContents.filter((c) => c.status === "completed").length,
   };
+
+  const changeLocalDate = (date: string) => {
+    const dateObj = new Date(date);
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return dateObj.toLocaleDateString('ko-KR', options);
+  }
+
   return (
     <TabsContent value="progress">
       <FilterSection>
@@ -140,7 +135,7 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
 
         <Tabs value={activeCustomTab} onValueChange={setActiveCustomTab}>
           <FilterTabs>
-            <TabsTrigger value="all">전체 ({tabCounts.all})</TabsTrigger>
+            <TabsTrigger value="all">전체 ({data?.length})</TabsTrigger>
             <TabsTrigger value="pending">대기 중 ({tabCounts.pending})</TabsTrigger>
             <TabsTrigger value="in-progress">진행 중 ({tabCounts["in-progress"]})</TabsTrigger>
             <TabsTrigger value="completed">완료 ({tabCounts.completed})</TabsTrigger>
@@ -148,39 +143,35 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
         </Tabs>
       </FilterSection>
 
-      {filteredContents.length > 0 ? (
+      {data?.length! > 0 ? (
         <ContentList>
-          {filteredContents.map((content) => (
+          {data?.map((content) => (
             <ContentCard key={content.id}>
               <CardHeaderSection>
                 <ContentHeader>
                   <ContentInfo>
-                    <ContentTitle>{content.title}</ContentTitle>
+                    <ContentTitle>{changeLocalDate(content.createdAt)} 요청</ContentTitle>
                     <ContentMeta>
                       <MetaItem>
                         <Calendar size={14} />
-                        신청일: {content.applicationDate}
+                        신청일: {changeLocalDate(content.createdAt)}
                       </MetaItem>
-                      {content.expectedDate && (
-                        <MetaItem>
-                          <Clock size={14} />
-                          예상 완료: {content.expectedDate}
-                        </MetaItem>
-                      )}
-                      {content.editorName && (
+                      {content.statusHistories[0]?.editorName && (
                         <MetaItem>
                           <User size={14} />
-                          담당 에디터: {content.editorName}
+                          담당 에디터: {content.statusHistories[0]?.editorName}
                         </MetaItem>
                       )}
                     </ContentMeta>
-                    <CardDescription>{content.description}</CardDescription>
+                    <CardDescription>작성한 체형 특징: {content.bodyFeature}</CardDescription>
+                    <CardDescription>작성한 상황: {content.situation}</CardDescription>
+                    <CardDescription>예산: {content.budget}만원</CardDescription>
                   </ContentInfo>
 
                   <StatusSection>
-                    <StatusBadge status={content.status}>
-                      {getStatusIcon(content.status)}
-                      {getStatusText(content.status)}
+                    <StatusBadge status={content.statusHistories[content.statusHistories.length - 1].statusName}>
+                      {getStatusIcon(content.statusHistories[content.statusHistories.length - 1].statusName)}
+                      {getStatusText(content.statusHistories[content.statusHistories.length - 1].statusName)}
                     </StatusBadge>
                   </StatusSection>
                 </ContentHeader>
@@ -190,21 +181,20 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
                 <ProgressSection>
                   <ProgressHeader>
                     <ProgressLabel>진행 상황</ProgressLabel>
-                    <ProgressValue>{content.progress}%</ProgressValue>
+                    <ProgressValue>{content.statusHistories.length * 20}%</ProgressValue>
                   </ProgressHeader>
-                  <Progress value={content.progress} className="h-2" />
+                  <Progress value={content.statusHistories.length * 20} className="h-2" />
                 </ProgressSection>
-
-                <ItemTags>
-                  {content.items.map((item, index) => (
+                {/*<ItemTags>
+                  {content.recommendedStyle.items.map((item, index) => (
                     <ItemTag key={index} variant="outline">
                       <Tag size={12} />
                       {item}
                     </ItemTag>
                   ))}
-                </ItemTags>
+                </ItemTags>*/}
 
-                <TimelineSection isExpanded={expandedTimelines.has(content.id)}>
+               {/* <TimelineSection isExpanded={expandedTimelines.has(content.id)}>
                   <TimelineTitle>진행 단계</TimelineTitle>
                   <TimelineList>
                     {content.timeline.map((step, index) => (
@@ -217,20 +207,20 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
                       </TimelineItem>
                     ))}
                   </TimelineList>
-                </TimelineSection>
+                </TimelineSection>*/}
 
                 <ActionButtons>
-                  <Button variant="outline" size="sm" onClick={() => toggleTimeline(content.id)}>
+                  {/*<Button variant="outline" size="sm" onClick={() => toggleTimeline(content.id)}>
                     {expandedTimelines.has(content.id) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     진행 단계 확인
-                  </Button>
+                  </Button>*/}
                   <Link href={`/mypage/detail/${content.id}`}>
                     <Button variant="outline" size="sm">
                       <FileCheck size={16} />
                       신청 내용 확인하기
                     </Button>
                   </Link>
-                  {content.status === "completed" && (
+                  {/*{content.status === "completed" && (
                     <Dialog open={reviewModalOpen} onOpenChange={setReviewModalOpen}>
                       <DialogTrigger asChild>
                         <Button variant="outline" size="sm" onClick={() => setSelectedContentId(content.id)}>
@@ -282,7 +272,7 @@ const ProgressContent = ({ setThankYouModalOpen }: ProgressContentProps) => {
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
-                  )}
+                  )}*/}
                 </ActionButtons>
               </CardContent>
             </ContentCard>
@@ -429,21 +419,21 @@ const StatusSection = styled.div`
 `;
 
 const StatusBadge = styled(Badge)<{
-  status: "pending" | "assigned" | "in-progress" | "review" | "completed" | "cancelled"
+  status: string
 }>`
   background-color: ${(props) => {
     switch (props.status) {
-      case "pending":
+      case "신청 접수":
         return "#f59e0b";
-      case "assigned":
+      case "에디터 배정":
         return "#8b5cf6";
-      case "in-progress":
+      case "스타일링 제작":
         return "#3b82f6";
-      case "review":
+      case "검토 및 수정":
         return "#06b6d4";
-      case "completed":
+      case "최종 완성":
         return "#10b981";
-      case "cancelled":
+      case "취소됨":
         return "#ef4444";
       default:
         return "#f59e0b";

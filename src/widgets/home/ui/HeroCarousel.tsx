@@ -5,7 +5,11 @@ import styled from "@emotion/styled";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { slides, useHandleCarousel } from "@/src/widgets/home/feature/hooks/useHandleCarousel";
 
-export default function HeroCarousel() {
+interface SlideProps {
+  scroll: () => void;
+}
+
+export default function HeroCarousel({ scroll }: SlideProps) {
   const { slideDirection, currentSlide, goToNextSlide, goToPrevSlide, handleIndicatorClick } = useHandleCarousel();
 
   return (
@@ -17,7 +21,7 @@ export default function HeroCarousel() {
               <HeroContent slideDirection={slideDirection} isActive={index === currentSlide}>
                 <HeroTitle>{slide.title}</HeroTitle>
                 <HeroSubtitle>{slide.subtitle}</HeroSubtitle>
-                <Link href={slide.link}>
+                <Link href={slide.link ? slide.link : "#"} onClick={slide.link ? undefined : scroll}>
                   <HeroButton>{slide.buttonText}</HeroButton>
                 </Link>
               </HeroContent>
@@ -43,12 +47,11 @@ export default function HeroCarousel() {
 }
 
 const HeroSection = styled.section`
-  margin-bottom: 3rem;
 `;
 
 const HeroBanner = styled.div`
   position: relative;
-  height: 400px;
+  height: 100vh;
   overflow: hidden;
   width: 100%;
 

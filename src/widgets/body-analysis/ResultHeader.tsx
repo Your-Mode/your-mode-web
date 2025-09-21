@@ -5,13 +5,15 @@ import Link from "next/link";
 const ResultHeader = () => {
   return (
     <HeaderSection>
-      <BackLink href="/mypage">
-        <ChevronLeft size={20} style={{ marginRight: "0.5rem" }} />
-        마이페이지로 돌아가기
-      </BackLink>
-      <ResultIconContainer>
-        <Award size={32} color="white" />
-      </ResultIconContainer>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <BackLink href="/mypage">
+          <ChevronLeft size={20} style={{ marginRight: "0.5rem" }} />
+          마이페이지로 돌아가기
+        </BackLink>
+        <ResultIconContainer>
+          <Award size={32} color="white" />
+        </ResultIconContainer>
+      </div>
       <Title>체형 분석 결과</Title>
       <TitleUnderline />
     </HeaderSection>
@@ -23,7 +25,7 @@ export default ResultHeader;
 const HeaderSection = styled.div`
   text-align: center;
   margin-bottom: 1.5rem;
-`
+`;
 
 const BackLink = styled(Link)`
   display: inline-flex;
@@ -36,7 +38,7 @@ const BackLink = styled(Link)`
   &:hover {
     color: #111827;
   }
-`
+`;
 
 const ResultIconContainer = styled.div`
   display: inline-flex;
@@ -48,14 +50,14 @@ const ResultIconContainer = styled.div`
   border-radius: 50%;
   margin-bottom: 1rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-`
+`;
 
 const Title = styled.h1`
   font-size: 1.875rem;
   font-weight: bold;
   color: #111827;
   margin-bottom: 1rem;
-`
+`;
 
 const TitleUnderline = styled.div`
   width: 6rem;
@@ -63,4 +65,4 @@ const TitleUnderline = styled.div`
   background: linear-gradient(to right, #f472b6, #ec4899);
   margin: 0 auto;
   border-radius: 9999px;
-`
+`;

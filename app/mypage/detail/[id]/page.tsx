@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src
 import { Badge } from "@/src/shared/components/ui/badge"
 import { ArrowLeft, Calendar, User, Tag, Clock, CheckCircle } from "lucide-react"
 import styled from "@emotion/styled"
+import { useGetContentRequestDetail } from "@/src/widgets/mypage/feature/useGetContentRequestDetail";
 
 const MainContainer = styled.div`
   min-height: 100vh;
@@ -204,11 +205,33 @@ const sampleContentDetails = {
 export default function ContentDetailPage() {
   const params = useParams()
   const router = useRouter()
-  const contentId = params.id as string
+  const contentId = params.id as string;
+  const { data, isPending, isError } = useGetContentRequestDetail(parseInt(contentId));
+  console.log(data);
 
-  const contentDetail = sampleContentDetails[contentId as keyof typeof sampleContentDetails]
+  if (isPending) {
+    return <div>대기중...</div>
+  }
 
-  if (!contentDetail) {
+  if (isError) {
+    return (
+      <MainContainer>
+        <MainContent>
+          <BackButton variant="outline" onClick={() => router.back()}>
+            <ArrowLeft size={16} />
+            돌아가기
+          </BackButton>
+          <Card>
+            <CardContent className="text-center py-8">
+              <p>오류가 발생했습니다. 다시 시도해주세요.</p>
+            </CardContent>
+          </Card>
+        </MainContent>
+      </MainContainer>
+    )
+  }
+
+  if (!data) {
     return (
       <MainContainer>
         <MainContent>
@@ -236,8 +259,8 @@ export default function ContentDetailPage() {
 
         <DetailCard>
           <CardHeader>
-            <CardTitle>{contentDetail.title}</CardTitle>
-            <CardDescription>{contentDetail.description}</CardDescription>
+            <CardTitle>{data.createdAt} 요청</CardTitle>
+            {/*<CardDescription>{contentDetail.description}</CardDescription>*/}
           </CardHeader>
           <CardContent>
             <InfoGrid>
@@ -246,9 +269,9 @@ export default function ContentDetailPage() {
                   <Calendar size={14} style={{ display: "inline", marginRight: "0.25rem" }} />
                   신청일
                 </InfoLabel>
-                <InfoValue>{contentDetail.applicationDate}</InfoValue>
+                <InfoValue>{data.createdAt}</InfoValue>
               </InfoItem>
-              <InfoItem>
+              {/*<InfoItem>
                 <InfoLabel>
                   <Clock size={14} style={{ display: "inline", marginRight: "0.25rem" }} />
                   예상 완료일
@@ -261,7 +284,7 @@ export default function ContentDetailPage() {
                   담당 에디터
                 </InfoLabel>
                 <InfoValue>{contentDetail.editorName}</InfoValue>
-              </InfoItem>
+              </InfoItem>*/}
             </InfoGrid>
           </CardContent>
         </DetailCard>
@@ -275,28 +298,28 @@ export default function ContentDetailPage() {
             <InfoGrid>
               <InfoItem>
                 <InfoLabel>이름</InfoLabel>
-                <InfoValue>{contentDetail.formData.name}</InfoValue>
+                <InfoValue>{data.profile.name}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>체형</InfoLabel>
-                <InfoValue>{contentDetail.formData.bodyType}</InfoValue>
+                <InfoValue>{data.profile.bodyTypeName} 체형</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>키</InfoLabel>
-                <InfoValue>{contentDetail.formData.height}cm</InfoValue>
+                <InfoValue>{data.profile.height}cm</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>몸무게</InfoLabel>
-                <InfoValue>{contentDetail.formData.weight}kg</InfoValue>
+                <InfoValue>{data.profile.weight}kg</InfoValue>
               </InfoItem>
             </InfoGrid>
 
             <SectionTitle>체형적 특징</SectionTitle>
-            <TextContent>{contentDetail.formData.bodyFeatures}</TextContent>
+            <TextContent>{data.bodyFeature}</TextContent>
 
             <SectionTitle>추천 받고 싶은 아이템</SectionTitle>
             <ItemTags>
-              {contentDetail.formData.recommendedItems.map((item, index) => (
+              {data.itemCategoryNames.map((item, index) => (
                 <ItemTag key={index}>
                   <Tag size={12} />
                   {item}
@@ -305,20 +328,20 @@ export default function ContentDetailPage() {
             </ItemTags>
 
             <SectionTitle>착용 상황</SectionTitle>
-            <TextContent>{contentDetail.formData.situation}</TextContent>
+            <TextContent>{data.situation}</TextContent>
 
             <SectionTitle>선호하는 스타일</SectionTitle>
-            <TextContent>{contentDetail.formData.preferredStyle}</TextContent>
+            <TextContent>{data.recommendedStyle}</TextContent>
 
             <SectionTitle>피하고 싶은 스타일</SectionTitle>
-            <TextContent>{contentDetail.formData.avoidStyle}</TextContent>
+            <TextContent>{data.avoidedStyle}</TextContent>
 
             <SectionTitle>예산</SectionTitle>
-            <TextContent>{contentDetail.formData.budget}</TextContent>
+            <TextContent>{data.budget}만원</TextContent>
           </CardContent>
         </DetailCard>
 
-        <DetailCard>
+        {/*<DetailCard>
           <CardHeader>
             <CardTitle>진행 상황</CardTitle>
           </CardHeader>
@@ -339,7 +362,7 @@ export default function ContentDetailPage() {
               </TimelineList>
             </TimelineSection>
           </CardContent>
-        </DetailCard>
+        </DetailCard>*/}
       </MainContent>
     </MainContainer>
   )

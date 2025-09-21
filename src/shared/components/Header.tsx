@@ -76,15 +76,15 @@ export default function Header() {
               <Link href="/" passHref legacyBehavior>
                 <NavLink isActive={isHomeActive}>YOUR MODE</NavLink>
               </Link>
-              <Link href="/contents" passHref legacyBehavior>
+              {/*<Link href="/contents" passHref legacyBehavior>
                 <NavLink isActive={isContentsActive}>CONTENTS</NavLink>
               </Link>
               <Link href="/editor-contents" passHref legacyBehavior>
                 <NavLink isActive={isEditorContentsActive}>EDITOR</NavLink>
-              </Link>
-              <Link href="/about" passHref legacyBehavior>
+              </Link>*/}
+              {/*<Link href="/about" passHref legacyBehavior>
                 <NavLink isActive={isAboutActive}>ABOUT</NavLink>
-              </Link>
+              </Link>*/}
             </NavLinks>
             <AuthLinks>
               {isLoggedIn ? (
@@ -105,7 +105,7 @@ export default function Header() {
               ) : (
                 <>
                   <AuthLink onClick={() => setIsLoginOpen(true)}>로그인</AuthLink>
-                  <AuthLink onClick={handleSignupClick}>회원가입</AuthLink>
+                  {/*<AuthLink onClick={handleSignupClick}>회원가입</AuthLink>*/}
                 </>
               )}
             </AuthLinks>

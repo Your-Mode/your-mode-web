@@ -131,7 +131,7 @@ const FeatureDescription = styled.p`
   font-size: 1.2rem;
   line-height: 1.8;
   color: #555;
-  max-width: 600px;
+  max-width: 1000px;
   @media (max-width: 768px) {
     font-size: 0.85rem;
     line-height: 1.5;
