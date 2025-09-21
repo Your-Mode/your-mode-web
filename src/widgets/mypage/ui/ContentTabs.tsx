@@ -21,12 +21,12 @@ export default function ContentTabs({ activeTab, onTabChange, children }: Conten
         <TabsTrigger value="progress" className="tabs-trigger">
           진행 상황
         </TabsTrigger>
-        <TabsTrigger value="favorites" className="tabs-trigger">
+        {/*<TabsTrigger value="favorites" className="tabs-trigger">
           내가 찜한 컨텐츠
         </TabsTrigger>
         <TabsTrigger value="comments" className="tabs-trigger">
           댓글 단 컨텐츠
-        </TabsTrigger>
+        </TabsTrigger>*/}
         {/*<TabsTrigger value="recent" className="tabs-trigger">
           최근 본 컨텐츠
         </TabsTrigger>*/}

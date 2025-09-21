@@ -2,6 +2,9 @@
 
 import Link from "next/link"
 import styled from "@emotion/styled"
+import IcThreads from "@/src/shared/assets/ic/ic-threads.svg"
+import ImgNaverBlog from "@/src/shared/assets/img/img-naver-blog.png"
+import Image from "next/image";
 
 const FooterContainer = styled.footer`
   background-color: ${({ theme }) => theme.colors.background.tertiary};
@@ -69,7 +72,6 @@ const SocialIcons = styled.div`
 const SocialIcon = styled.button`
   width: 2rem;
   height: 2rem;
-  background-color: ${({ theme }) => theme.colors.text.primary};
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -143,8 +145,12 @@ export default function Footer() {
           <SocialSection>
             <SocialIcons>
               <SocialIcon aria-label="카카오톡" />
-              <SocialIcon aria-label="네이버" />
-              <SocialIcon aria-label="인스타그램" />
+              <SocialIcon aria-label="네이버">
+                <Image src={ImgNaverBlog} alt="" width={36} height={36} />
+              </SocialIcon>
+              <SocialIcon aria-label="스레드">
+                <Image src={IcThreads} alt="" width={36} height={36} />
+              </SocialIcon>
             </SocialIcons>
           </SocialSection>
 
