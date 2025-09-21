@@ -10,13 +10,21 @@ import { useHandleDropdown } from "@/src/widgets/contents/feature/useHandleDropd
 import ContentFilter from "@/src/widgets/contents/ui/ContentFilter";
 import ContentsHeader from "@/src/widgets/contents/ui/ContentsHeader";
 import ContentsList from "@/src/widgets/contents/ui/ContentsList";
+import { useGetEditorContentList } from "@/src/widgets/contents/feature/useGetEditorContentList";
 
 export default function EditorContentsPage() {
   const { searchQuery, onChangeSearch, filterContent } = useHandleSearch();
   const { activeTab, changeTab } = useHandleTab();
   const { sortType, isSortOpen, handleSortClick, handleClickOutside, handleSortOptionClick } = useHandleDropdown();
+  const bodyTypeIds = activeTab === "스트레이트" ? 1 : activeTab === "웨이브" ? 2 : activeTab === "내추럴" ? 3 : null;
 
-  let filteredContent = filterContent(editorContent, activeTab, sortType);
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetEditorContentList(bodyTypeIds, {
+      size: 9,
+      sort: [],
+    });
+
+  const items = data?.flat ?? [];
 
   return (
     <MainContainer onClick={handleClickOutside}>
@@ -28,7 +36,11 @@ export default function EditorContentsPage() {
         <Searchbar searchQuery={searchQuery} onChangeSearch={onChangeSearch} />
         <ContentFilter sortType={sortType} isSortOpen={isSortOpen} activeTab={activeTab} changeTab={changeTab}
                        handleSortClick={handleSortClick} handleSortOptionClick={handleSortOptionClick} />
-        <ContentsList filteredContent={filteredContent} />
+        <ContentsList
+          items={items}
+          onLoadMore={() => hasNextPage && fetchNextPage()}
+          isFetchingMore={isFetchingNextPage}
+        />
         <FloatingButton />
       </MainContent>
     </MainContainer>
