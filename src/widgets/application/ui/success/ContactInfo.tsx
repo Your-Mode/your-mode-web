@@ -5,9 +5,9 @@ const ContactInfo = () => {
     <ContactInfoContainer>
       <strong>📞 문의사항이 있으시나요?</strong>
       <br />
-      고객센터: 010-1234-5678
+      고객센터: 010-6415-1548
       <br />
-      이메일: yourmode@naver.com
+      이메일: urmode@naver.com
       <br />
       평일 09:00 - 18:00 (주말 및 공휴일 휴무)
     </ContactInfoContainer>

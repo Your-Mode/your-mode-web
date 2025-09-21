@@ -1,16 +1,18 @@
 "use client";
 
-import type React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/src/shared/components/ui/button";
 import { Input } from "@/src/shared/components/ui/input";
 import { Label } from "@/src/shared/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/src/shared/components/ui/radio-group";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import styled from "@emotion/styled";
 import InnerHeader from "@/src/shared/components/InnerHeader";
+import { useGetMyProfile } from "@/src/widgets/mypage/feature/useGetMyProfile";
+import { useUpdateMyInfo } from "@/src/widgets/mypage/feature/useUpdateMyInfo";
+import { UpdateMyProfileRequest } from "@/src/shared/api/user";
+import { useAuthStore } from "@/src/shared/store/auth";
 
 const MainContainer = styled.div`
   min-height: 100vh;
@@ -54,12 +56,12 @@ const FormSection = styled.div`
   padding: 1.5rem 0;
   border-bottom: 1px solid #f0f0f0;
 
-  &:last-child {
+  &:last-of-type {
     border-bottom: none;
     padding-bottom: 0;
   }
 
-  &:first-child {
+  &:first-of-type {
     padding-top: 0;
   }
 `;
@@ -101,26 +103,6 @@ const StyledInput = styled(Input)`
     background-color: #f8f9fa;
     color: #666;
     cursor: not-allowed;
-  }
-`;
-
-const PasswordInputContainer = styled.div`
-  position: relative;
-`;
-
-const PasswordToggle = styled.button`
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  padding: 0.25rem;
-
-  &:hover {
-    color: #ff3e6c;
   }
 `;
 
@@ -199,16 +181,19 @@ const DisabledNote = styled.span`
 `;
 
 export default function ProfileEditPage() {
+  const { user } = useAuthStore();
+  const { data, isPending } = useGetMyProfile();
+  const { mutate, isError } = useUpdateMyInfo();
   const router = useRouter();
 
   // 기존 사용자 정보 (실제로는 API에서 가져올 데이터)
   const [profileData, setProfileData] = useState({
-    email: "yourmode@naver.com",
     name: "김정윤",
-    phone: "010-1234-5678",
+    phoneNumber: "01012345678",
     height: "165",
     weight: "55",
     bodyType: "wave",
+    gender: "male",
   });
 
   // 기본 정보 상태
@@ -223,11 +208,11 @@ export default function ProfileEditPage() {
     setBasicInfoErrors({});
 
     const newErrors: { [key: string]: string } = {};
-    if (!profileData.name) newErrors.name = "이름을 입력해주세요";
-    if (!profileData.phone) newErrors.phone = "전화번호를 입력해주세요";
-    if (!profileData.height) newErrors.height = "키를 입력해주세요";
-    if (!profileData.weight) newErrors.weight = "몸무게를 입력해주세요";
-    if (!profileData.bodyType) newErrors.bodyType = "체형을 선택해주세요";
+    if (!profileData.name) newErrors.name = '이름을 입력해주세요';
+    if (!profileData.phoneNumber) newErrors.phone = '전화번호를 입력해주세요';
+    if (!profileData.height) newErrors.height = '키를 입력해주세요';
+    if (!profileData.weight) newErrors.weight = '몸무게를 입력해주세요';
+    if (!profileData.bodyType) newErrors.bodyType = '체형을 선택해주세요';
 
     if (Object.keys(newErrors).length > 0) {
       setBasicInfoErrors(newErrors);
@@ -236,19 +221,59 @@ export default function ProfileEditPage() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setBasicInfoSuccess("기본 정보가 성공적으로 업데이트되었습니다!");
-      setTimeout(() => setBasicInfoSuccess(""), 3000);
-    } catch ( error ) {
-      setBasicInfoErrors({ general: "기본 정보 업데이트 중 오류가 발생했습니다." });
+      const payload: UpdateMyProfileRequest = {
+        ...profileData,
+        height: Number(profileData.height),   // ✅ 여기서만 숫자 변환
+        weight: Number(profileData.weight),
+        // 필요 시 bodyType → bodyTypeId 매핑
+        bodyTypeId:
+          profileData.bodyType === 'straight' ? 1 :
+            profileData.bodyType === 'wave' ? 2 :
+              profileData.bodyType === 'natural' ? 3 : 4,
+      };
+
+      mutate(payload)
+
+      await new Promise((r) => setTimeout(r, 1000));
+      setBasicInfoSuccess('기본 정보가 성공적으로 업데이트되었습니다!');
+      setTimeout(() => setBasicInfoSuccess(''), 3000);
+    } catch (error) {
+      setBasicInfoErrors({ general: '기본 정보 업데이트 중 오류가 발생했습니다.' });
     } finally {
       setBasicInfoLoading(false);
     }
   };
 
+
   const handleCancel = () => {
     router.back();
   };
+
+  useEffect(() => {
+    if (data) {
+      setProfileData((prev) => ({
+        ...prev,
+        name: data.name ?? prev.name,
+        phoneNumber: data.phoneNumber ?? prev.phoneNumber,
+        // ✅ 숫자 → 문자열 변환
+        height: data.height != null ? String(data.height) : prev.height,
+        weight: data.weight != null ? String(data.weight) : prev.weight,
+        gender: data.gender,
+        bodyType:
+          data.bodyTypeId === 1
+            ? 'straight'
+            : data.bodyTypeId === 2
+              ? 'wave'
+              : data.bodyTypeId === 3
+                ? 'natural'
+                : 'unknown',
+      }));
+    }
+  }, [data]);
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <MainContainer>
@@ -262,7 +287,7 @@ export default function ProfileEditPage() {
 
               <FormGroup>
                 <Label htmlFor="email">이메일</Label>
-                <StyledInput id="email" type="email" value={profileData.email} disabled />
+                <StyledInput id="email" type="email" value={user?.email} disabled />
                 <DisabledNote>이메일은 변경할 수 없습니다</DisabledNote>
               </FormGroup>
 
@@ -271,7 +296,7 @@ export default function ProfileEditPage() {
                 <StyledInput
                   id="name"
                   placeholder="ex) 김모드"
-                  value={profileData.name}
+                  value={profileData?.name}
                   onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
                 />
                 {basicInfoErrors.name && <ErrorText>{basicInfoErrors.name}</ErrorText>}
@@ -280,10 +305,10 @@ export default function ProfileEditPage() {
               <FormGroup>
                 <Label htmlFor="phone">전화번호</Label>
                 <StyledInput
-                  id="phone"
-                  placeholder="ex) 010-1234-5678"
-                  value={profileData.phone}
-                  onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                  id="phoneNumber"
+                  placeholder="ex) 01012345678"
+                  value={profileData?.phoneNumber}
+                  onChange={(e) => setProfileData({ ...profileData, phoneNumber: e.target.value })}
                 />
                 {basicInfoErrors.phone && <ErrorText>{basicInfoErrors.phone}</ErrorText>}
               </FormGroup>
@@ -295,7 +320,7 @@ export default function ProfileEditPage() {
                     id="height"
                     type="number"
                     placeholder="ex) 165"
-                    value={profileData.height}
+                    value={profileData.height}         // ✅ 문자열 유지
                     onChange={(e) => setProfileData({ ...profileData, height: e.target.value })}
                   />
                   {basicInfoErrors.height && <ErrorText>{basicInfoErrors.height}</ErrorText>}

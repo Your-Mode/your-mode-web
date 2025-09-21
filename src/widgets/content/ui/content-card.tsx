@@ -23,6 +23,7 @@ interface ContentCardProps {
   items?: string[];
   iconType?: "like" | "view" | "comment";
   onClick?: () => void;
+  imageUrl?: string;
 }
 
 export default function ContentCardComponent({
@@ -41,6 +42,7 @@ export default function ContentCardComponent({
                                                items = [],
                                                iconType = "like",
                                                onClick,
+                                               imageUrl,
                                              }: ContentCardProps) {
   const handleLikeClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -62,7 +64,7 @@ export default function ContentCardComponent({
 
   return (
     <ContentCardContainer onClick={onClick}>
-      <ContentImage>
+      <ContentImage imageUrl={imageUrl}>
         <LikeButton isLiked={isLiked} onClick={handleLikeClick}>
           {getIcon()}
         </LikeButton>
@@ -145,10 +147,13 @@ const ContentCardContainer = styled(Card)`
   }
 `;
 
-const ContentImage = styled.div`
+const ContentImage = styled.div<{ imageUrl?: string }>`
   height: 240px;
   background-color: #f3f4f6;
-  background-image: url('/placeholder.svg?height=240&width=220');
+  background-image: ${({ imageUrl }) =>
+    imageUrl
+      ? `url('${imageUrl}')`
+      : `url('/placeholder.svg?height=240&width=220')`};
   background-size: cover;
   background-position: center;
   position: relative;

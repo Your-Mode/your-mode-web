@@ -1,31 +1,45 @@
 import ContentCard from "@/src/widgets/content/ui/content-card-vertical";
 import { ContentItem } from "@/src/shared/types/content";
 import styled from "@emotion/styled";
+import { formatDate } from "@/src/shared/utils/formatDate";
+import { Article } from "@/src/shared/api/content";
 
 interface ContentsListProps {
-  filteredContent: ContentItem[];
+  items?: Article[];
+  filteredContent?: ContentItem[];
+  onLoadMore?: () => void;
+  isFetchingMore?: boolean;
 }
 
-const ContentsList = ({ filteredContent }: ContentsListProps) => {
+const ContentsList = ({ filteredContent, items, onLoadMore, isFetchingMore}: ContentsListProps) => {
+  if (!items?.length) {
+    return <NoContentMessage>검색 결과가 없습니다. 다른 검색어나 필터를 시도해보세요.</NoContentMessage>;
+  }
+
+  console.log(items)
   return (
     <>
-      {filteredContent.length > 0 ? (
-        <ContentGrid>
-          {filteredContent.map((content) => (
-            <ContentCard
-              key={content.id}
-              id={content.id}
-              title={content.title}
-              image={content.image}
-              bodyType={content.bodyType}
-              likes={content.likes}
-              comments={content.comments}
-              date={content.date}
-            />
-          ))}
-        </ContentGrid>
-      ) : (
-        <NoContentMessage>검색 결과가 없습니다. 다른 검색어나 필터를 시도해보세요.</NoContentMessage>
+      <ContentGrid>
+        {items.map((content) => (
+          <ContentCard
+            key={content.id}
+            id={content.id.toString()}
+            title={content.title}
+            image={content.mainImgUrl}
+            bodyType={content.bodyTypes.map(bt => bt.name).join(', ')}
+            likes={content.likeCount}
+            comments={content.commentCount}
+            date={formatDate(content.createdAt)}
+          />
+        ))}
+      </ContentGrid>
+
+      {onLoadMore && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
+          <button onClick={onLoadMore} disabled={isFetchingMore}>
+            {isFetchingMore ? '불러오는 중…' : '더 보기'}
+          </button>
+        </div>
       )}
     </>
   )

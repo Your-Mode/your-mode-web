@@ -2,15 +2,15 @@ import { Download, Eye, Share2, Sparkles, Target } from "lucide-react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { Button } from "@/src/shared/components/ui/button";
-import { useBodyResultStore } from "@/src/widgets/auth/feature/hooks/useBodyResultStore";
 import { getResultInfo } from "@/src/shared/api/getBodyResultInfo";
+import { MySurveyResultDetailResponse } from "@/src/shared/api/survey";
+import { formatDate } from "@/src/shared/utils/formatDate";
 
 interface BodyResultCardProps {
-  analysisDate: string;
+  bodyResultDetailData?: MySurveyResultDetailResponse;
 }
 
-const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
-  const { bodyResult } = useBodyResultStore();
+const MyBodyResultCard = ({ bodyResultDetailData }: BodyResultCardProps) => {
   const resultInfo = getResultInfo("wave");
   const handleShare = async () => {
     /*if (navigator.share) {
@@ -35,6 +35,12 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
     alert("PDF 다운로드 기능은 준비 중입니다!");
   };
 
+  if (!bodyResultDetailData) {
+    return <ResultCard bgGradient={resultInfo.bgGradient}>
+      체형 분석 결과가 존재하지 않습니다.
+    </ResultCard>
+  }
+
   return (
     <ResultCard bgGradient={resultInfo.bgGradient}>
       <ResultContent>
@@ -42,12 +48,12 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
           <ResultTypeIcon gradient={resultInfo.gradient}>
             <Target size={64} color="white" />
           </ResultTypeIcon>
-          <ResultTypeTitle>{bodyResult?.body_type}</ResultTypeTitle>
+          <ResultTypeTitle>{bodyResultDetailData?.bodyTypeName} 타입</ResultTypeTitle>
           <AnalysisDate>
             <Eye size={16} />
-            분석일: {analysisDate}
+            분석일: {formatDate(bodyResultDetailData?.createdAt)}
           </AnalysisDate>
-          <ResultTypeDescription>{bodyResult?.type_description}</ResultTypeDescription>
+          <ResultTypeDescription>{bodyResultDetailData?.typeDescription}</ResultTypeDescription>
         </ResultTypeContainer>
 
         <ResultGrid>
@@ -56,7 +62,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               상세 체형 특징
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.detailed_features}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.detailedFeatures}</ResultParagraph>
           </ResultSection>
 
           <ResultSection>
@@ -64,7 +70,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               매력 포인트
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.attraction_points}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.attractionPoints}</ResultParagraph>
           </ResultSection>
 
           <ResultSection>
@@ -72,7 +78,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               추천 스타일 & 아이템
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.recommended_styles}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.recommendedStyles}</ResultParagraph>
           </ResultSection>
 
           <ResultSection>
@@ -80,7 +86,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               피해야 할 스타일
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.avoid_styles}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.avoidStyles}</ResultParagraph>
           </ResultSection>
 
           <ResultSection>
@@ -88,7 +94,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               보완 포인트
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.styling_fixes}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.stylingFixes}</ResultParagraph>
           </ResultSection>
 
           <ResultSection>
@@ -96,7 +102,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
               <ResultSectionDot accent={resultInfo.accent} />
               스타일링 팁
             </ResultSectionTitle>
-            <ResultParagraph>{bodyResult?.styling_tips}</ResultParagraph>
+            <ResultParagraph>{bodyResultDetailData.stylingTips}</ResultParagraph>
           </ResultSection>
         </ResultGrid>
 
@@ -112,7 +118,7 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
           </Link>
         </ResultActions>
 
-        <SecondaryActions>
+        {/*<SecondaryActions>
           <ActionButton onClick={handleShare}>
             <Share2 size={16} style={{ marginRight: "0.5rem" }} />
             결과 공유하기
@@ -121,13 +127,13 @@ const BodyResultCard = ({ analysisDate }: BodyResultCardProps) => {
             <Download size={16} style={{ marginRight: "0.5rem" }} />
             PDF 다운로드
           </ActionButton>
-        </SecondaryActions>
+        </SecondaryActions>*/}
       </ResultContent>
     </ResultCard>
   );
 };
 
-export default BodyResultCard;
+export default MyBodyResultCard;
 
 const ResultCard = styled.div<{ bgGradient: string }>`
   border: none;

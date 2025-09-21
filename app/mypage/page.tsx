@@ -11,54 +11,50 @@ import CommentContent from "@/src/widgets/mypage/ui/CommentContent";
 import RecentContent from "@/src/widgets/mypage/ui/RecentContent";
 import BodyAnalysis from "@/src/widgets/mypage/ui/BodyAnalysis";
 import ThankYouModal from "@/src/widgets/mypage/ui/ThankYouModal";
-import { useGetMyProfile } from "@/src/widgets/mypage/feature/useGetMyProfile";
 import Error from "@/app/error";
 import { useAuthStore } from "@/src/shared/store/auth";
 import { ProfileHeader } from "@/src/widgets/mypage";
-
-const userProfile = {
-  name: "김정윤",
-  bodyType: "웨이브",
-  email: "yourmode@naver.com",
-  stats: {
-    customContents: 3,
-    favorites: 5,
-    comments: 2,
-  },
-};
+import { useGetMyPageInfo } from "@/src/widgets/mypage/feature/useGetMyPageInfo";
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState("my-content");
   const [thankYouModalOpen, setThankYouModalOpen] = useState(false);
-  const { data, isLoading, isError } = useGetMyProfile();
+  const { userQuery, contentApplicationListQuery, userComponentQuery } = useGetMyPageInfo();
   const email = useAuthStore().user?.email;
-  if (isError) {
+  if (userQuery.isError || contentApplicationListQuery.isError || userComponentQuery.isError) {
     return <Error />;
   }
 
-  if (data !== undefined && isLoading) {
+  if ((userQuery.data !== undefined && userQuery.isLoading) || (contentApplicationListQuery.data !== undefined && contentApplicationListQuery.isLoading) || (userComponentQuery.data !== undefined && userComponentQuery.isLoading)) {
     return <div>Loading...</div>;
   }
 
-  const bodyTypeName = data?.bodyTypeId === 1 ? "스트레이트" : data?.bodyTypeId === 2 ? "웨이브" : data?.bodyTypeId === 3 ? "내추럴" : "";
+  const bodyTypeName = userQuery.data?.bodyTypeId === 1 ? "스트레이트" : userQuery.data?.bodyTypeId === 2 ? "웨이브" : userQuery.data?.bodyTypeId === 3 ? "내추럴" : "체형 진단하러 가기";
+
+  const stats = {
+    customContentsCount: userComponentQuery.data?.customContentsCount,
+    likedContentsCount: userComponentQuery.data?.likedContentsCount,
+    myCommentsCount: userComponentQuery.data?.myCommentsCount,
+  };
 
   return (
     <MainContainer>
       <MainContent>
         <ProfileHeader
-          name={data?.name}
+          name={userQuery.data?.name}
           bodyType={bodyTypeName}
           email={email}
-          stats={userProfile.stats}
+          stats={stats}
         />
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <ContentTabs activeTab={activeTab} onTabChange={setActiveTab}>
-            <MyOwnContent />
-            <ProgressContent setThankYouModalOpen={setThankYouModalOpen} />
-            <FavoritesContent />
-            <CommentContent />
-            <RecentContent />
-            <BodyAnalysis />
+            {activeTab === "my-content" && <MyOwnContent />}
+            {activeTab === "progress" &&
+              <ProgressContent setThankYouModalOpen={setThankYouModalOpen} data={contentApplicationListQuery?.data} />}
+    {/*        {activeTab === "favorites" && <FavoritesContent />}
+            {activeTab === "comments" && <CommentContent />}*/}
+            {/*{<RecentContent />}*/}
+            {activeTab === "body-analysis" && <BodyAnalysis />}
           </ContentTabs>
         </Tabs>
         <ThankYouModal thankYouModalOpen={thankYouModalOpen} setThankYouModalOpen={setThankYouModalOpen} />

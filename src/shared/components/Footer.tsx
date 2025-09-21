@@ -2,6 +2,9 @@
 
 import Link from "next/link"
 import styled from "@emotion/styled"
+import IcThreads from "@/src/shared/assets/ic/ic-threads.svg"
+import ImgNaverBlog from "@/src/shared/assets/img/img-naver-blog.png"
+import Image from "next/image";
 
 const FooterContainer = styled.footer`
   background-color: ${({ theme }) => theme.colors.background.tertiary};
@@ -69,7 +72,6 @@ const SocialIcons = styled.div`
 const SocialIcon = styled.button`
   width: 2rem;
   height: 2rem;
-  background-color: ${({ theme }) => theme.colors.text.primary};
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -135,16 +137,20 @@ export default function Footer() {
         <FooterMain>
           <CompanyInfo>
             <CompanyName>(주)유어모드</CompanyName>
-            <InfoText>사업자등록번호: 1321-21321-213 | 대표: 복복복</InfoText>
-            <InfoText>주소지주소지주소지주소지주소지</InfoText>
-            <InfoText>고객센터: 010-1234-5678 | 이메일: yourmode@naver.com</InfoText>
+            <InfoText>사업자등록번호: 340-08-03240 | 대표: 전여진</InfoText>
+            <InfoText>경기 고양시 일산동구 고봉로 32-19 남정씨티프라자7차 303~305호 내부 3호실</InfoText>
+            <InfoText>고객센터: 010-6415-1548 | 이메일: urmode@naver.com</InfoText>
           </CompanyInfo>
 
           <SocialSection>
             <SocialIcons>
               <SocialIcon aria-label="카카오톡" />
-              <SocialIcon aria-label="네이버" />
-              <SocialIcon aria-label="인스타그램" />
+              <SocialIcon aria-label="네이버">
+                <Image src={ImgNaverBlog} alt="" width={36} height={36} />
+              </SocialIcon>
+              <SocialIcon aria-label="스레드">
+                <Image src={IcThreads} alt="" width={36} height={36} />
+              </SocialIcon>
             </SocialIcons>
           </SocialSection>
 

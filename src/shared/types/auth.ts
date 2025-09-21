@@ -30,7 +30,6 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   accessToken: string;
-  refreshToken: string;
   user: {
     name: string;
     email: string;
@@ -38,3 +37,5 @@ export interface LoginResponse {
     isNewUser: boolean;
   };
 }
+
+export interface KakaoSignupRequest extends Omit<LocalSignUpRequest, 'password' > {}

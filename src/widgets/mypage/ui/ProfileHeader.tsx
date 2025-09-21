@@ -10,9 +10,9 @@ interface ProfileHeaderProps {
   bodyType?: string;
   email?: string;
   stats: {
-    customContents: number
-    favorites: number
-    comments: number
+    customContentsCount: number | undefined ;
+    likedContentsCount: number | undefined;
+    myCommentsCount: number | undefined;
   };
 }
 
@@ -27,6 +27,8 @@ const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => 
     router.push("/mypage/password");
   };
 
+  const hasBodyType = bodyType !== "체형 진단하러 가기";
+
   return (
     <ProfileHeaderContainer>
       <ProfileInfo>
@@ -35,7 +37,9 @@ const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => 
           <UserDetails>
             <DetailItem>
               <User size={16} />
-              <span>체형: {bodyType}</span>
+              <BodyTypeSpan
+                hasBodyType={hasBodyType}
+                onClick={!hasBodyType ? () => router.push("/body-analysis") : () => undefined}>체형: {bodyType}</BodyTypeSpan>
             </DetailItem>
             <DetailItem>
               <Mail size={16} />
@@ -45,15 +49,15 @@ const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => 
 
           <UserStats>
             <StatItem>
-              <div className="value">{stats.customContents}</div>
+              <div className="value">{stats.customContentsCount}</div>
               <div className="label">맞춤 컨텐츠</div>
             </StatItem>
             <StatItem>
-              <div className="value">{stats.favorites}</div>
+              <div className="value">{stats.likedContentsCount}</div>
               <div className="label">찜한 컨텐츠</div>
             </StatItem>
             <StatItem>
-              <div className="value">{stats.comments}</div>
+              <div className="value">{stats.myCommentsCount}</div>
               <div className="label">댓글</div>
             </StatItem>
           </UserStats>
@@ -69,7 +73,7 @@ const ProfileHeader = ({ name, bodyType, email, stats }: ProfileHeaderProps) => 
       </ProfileInfo>
     </ProfileHeaderContainer>
   );
-}
+};
 
 export default ProfileHeader;
 
@@ -174,6 +178,11 @@ const DetailItem = styled.div`
   svg {
     color: ${({ theme }) => theme.colors.primary[500]};
   }
+`;
+
+const BodyTypeSpan = styled.span<{ hasBodyType: boolean }>`
+  cursor: ${({ hasBodyType }) => (hasBodyType ? "default" : "pointer")};
+  text-decoration: ${({ hasBodyType }) => (hasBodyType ? "none" : "underline")};
 `;
 
 const UserStats = styled.div`
