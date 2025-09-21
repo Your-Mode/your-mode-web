@@ -80,7 +80,7 @@ export const getContentRequestDetail = async (id: number) => {
   }
 };
 
-interface MyContentListResponse {
+export interface MyContentListResponse {
   totalElements: number;
   totalPages: number;
   first: boolean;
@@ -94,7 +94,7 @@ interface MyContentListResponse {
   empty: boolean;
 }
 
-interface Article {
+export interface Article {
   id: number;
   title: string;
   mainImgUrl: string;
@@ -147,7 +147,17 @@ export const getMyContentList = async (pageableQuery: PageableQuery, url?: strin
       page: pageableQuery.page,
       size: pageableQuery.size,
       sort: pageableQuery.sort.join(','),
-    }
+    },
+  });
+  return response.data;
+};
+
+export const getEditorContentList = async (bodyTypeIds: number | null, pageableQuery: PageableQuery) => {
+  const response = await axiosInstance.get<MyContentListResponse>('/contents/editor', {
+    params: {
+      bodyTypeIds,
+      ...pageableQuery,
+    },
   });
   return response.data;
 };
