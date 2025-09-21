@@ -4,7 +4,7 @@ interface SlideData {
   title: string
   subtitle: string
   buttonText: string
-  link: string
+  link?: string;
   backgroundImage: string
 }
 
@@ -29,7 +29,6 @@ export const slides: SlideData[] = [
     title: "나만의 스타일을 찾고 싶다면?",
     subtitle: "AI 기반 개인 맞춤형 스타일링 서비스로 나만의 패션을 완성하세요",
     buttonText: "더 알아보기",
-    link: "/about",
     backgroundImage:
       "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
   },
