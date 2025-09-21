@@ -51,8 +51,8 @@ export default function MyPage() {
             {activeTab === "my-content" && <MyOwnContent />}
             {activeTab === "progress" &&
               <ProgressContent setThankYouModalOpen={setThankYouModalOpen} data={contentApplicationListQuery?.data} />}
-            {activeTab === "favorites" && <FavoritesContent />}
-            {activeTab === "comments" && <CommentContent />}
+    {/*        {activeTab === "favorites" && <FavoritesContent />}
+            {activeTab === "comments" && <CommentContent />}*/}
             {/*{<RecentContent />}*/}
             {activeTab === "body-analysis" && <BodyAnalysis />}
           </ContentTabs>
