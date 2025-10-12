@@ -4,7 +4,7 @@ import { axiosInstance } from "@/src/shared/api/axiosInstance";
 
 export const chat = async (req: ChatRequest): Promise<ChatResponse> => {
   try {
-    const res = await axios.post<ChatResponse>("https://fast.yourmode.co.kr/assistant/chat", req, {
+    const res = await axios.post<ChatResponse>("https://anucplsmrhqmsxtrmsbawaws5i0fdoqn.lambda-url.ap-northeast-2.on.aws/assistant/chat", req, {
       timeout: 50000,
     });
     return res.data;
