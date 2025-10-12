@@ -108,7 +108,7 @@ export default function LoginModal({ isOpen, onClose, message }: LoginModalProps
               <TextLink onClick={handleEmailSignup}>회원가입</TextLink>
             </LinkGroup>
 
-            {/*<SocialLoginSection>
+            <SocialLoginSection>
               <SocialLoginTitle>간편 로그인</SocialLoginTitle>
               <SocialButtonsContainer>
                 <SocialButton onClick={() => handleSocialSignup("kakao")}>
@@ -118,7 +118,7 @@ export default function LoginModal({ isOpen, onClose, message }: LoginModalProps
                   <span>N</span>
                 </SocialButton>
               </SocialButtonsContainer>
-            </SocialLoginSection>*/}
+            </SocialLoginSection>
           </ModalBody>
         </ModalContent>
       </ModalOverlay>
